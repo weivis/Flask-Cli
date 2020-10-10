@@ -1,12 +1,13 @@
 # coding: utf-8
 """
-    建议:
-        尽量不要用0做默认状态 处理不好会和None冲突
+	建议:
+		尽量不要用0做默认状态 处理不好会和None冲突
 
     规范说明:
-        每个表必须存在更新时间和创建时间 可选参数[ index=True ] 设为索引
-        update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-        create_time = db.Column(db.DateTime, default=datetime.now)
+		每个表必须存在更新时间和创建时间 可选参数[ index=True ] 设为索引
+		update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+		create_time = db.Column(db.DateTime, default=datetime.now)
+		注: 建议直接继承基类 BaseModel
 
     基础Sql常用类型提供:
         参数说明[primary_key=True(设置字段内容不可重复), default(字段默认值)]
@@ -53,22 +54,28 @@
 		db.session.commit()
 """
 
-from datetime import datetime
-from app.Extensions import db
+from datetime import datetime
+from app.Extensions import db
 
-class DomeTable(db.Model):
-    
-    __tablename__ = 'dometable'
-    id = db.Column(db.Integer, primary_key=True)
-    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+class BaseModel(object):
+    """模型基类，为每个模型补充创建时间与更新时间
+	
+	可以继承该基类给每个表加上create_time， update_time
 
-    def toDict(self, filter=[]):
-        """
-            filter, [], 可选参数
-                :无
-        """
-        json = {
-            'id': id,
-        }
-        return json
+	create_time:
+		行创建时间
+
+	update_time:
+		每次该数据发送变化时会被更新
+
+	"""
+    id = db.Column(db.Integer, primary_key=True)
+    create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
+    update_time = db.Column(
+        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+
+
+class DemoTable(BaseModel, db.Model):
+
+    __tablename__ = 'demo_table'
+    id = db.Column(db.Integer, primary_key=True)

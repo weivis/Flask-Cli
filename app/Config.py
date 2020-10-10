@@ -42,7 +42,12 @@ class DevelopmentConfig(BaseConfig):
 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = ""
-
+    
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = 'happys_wei@163.com'
+    MAIL_PASSWORD = 'YTKPXXRKISOTASSV'
 
 class ProductionConfig(BaseConfig):
     """
@@ -51,7 +56,6 @@ class ProductionConfig(BaseConfig):
     
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = ""
-
 
 config = {
     'development': DevelopmentConfig,

@@ -21,9 +21,14 @@ def Token(permission):
     
     请求时头部['headers'] 需要携带 'Authorization' 参数名 并传入token
 
-    :Param permission: int, 设置允许访问的请求token类型, 1管理员, 2一般用户
+    Args:
+        permission: int, 设置允许访问的请求token类型, 1管理员, 2一般用户
 
-    :Returns :current_account = request['current_account']
+    Returns:
+        Object
+        example:
+            current_account = request['current_account']
+
     """
     def decorator(func):
         @wraps(func)

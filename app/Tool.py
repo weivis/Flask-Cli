@@ -2,8 +2,8 @@
 
 """
     个人常用工具包
-    :update 20201002
-    :ver 0.1
+    update 20201002
+    ver 0.1
 """
 
 from random import Random
@@ -13,8 +13,10 @@ import math
 
 def RandomStr(randomlength=8):
     """生成随机字符串
-
-    :param randomlength :int 随机字符串长度 默认长度8位
+    Args:
+        randomlength: int 随机字符串长度 默认长度8位
+    Returns:
+        str
     """
     str = ''
     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
@@ -27,9 +29,10 @@ def RandomStr(randomlength=8):
 
 def CheckEmailStr(email):
     """检验字符串是否合法邮箱格式
-
-    :param email :str 
-    正确情况下返回True
+    Args:
+        email: str 
+    Returns:
+        True, False
     """
     # re.compile(r"\"?([a-zA-Z0-9_-]+@\w+\.\w+)\"?")
     pattern = re.compile(r"\"?([0-9A-Za-z\-_\.]+@\w+\.\w+)\"?")
@@ -40,13 +43,15 @@ def Paginator(data, page, num=10):
     """
     列表分页(切片列表, 数据总量，分页总页数)
 
-    :param data :list 需要分页的数据的列表
-    :param page :int 获取页数
-    :param num  :int 分页数 默认为10
+    Args:
+        data: list 需要分页的数据的列表
+        page: int 获取页数
+        num: int 分页数 默认为10
 
-    :return :列表
-    :return :总条数
-    :return :分页数
+    Returns:
+        列表: item
+        总条数: 总数量
+        分页数: 总页数/每页条数 = 分页数
     """
     num = num
     page = page
@@ -66,19 +71,21 @@ def Paginator(data, page, num=10):
 def _Paginate(querys, query_page, per_page=10):
     """Sqlachamy query预处理
 
-    Args
-        :param querys : 查询集
-        :param query_page : 需要获取的页数
+    Args:
+        querys: 查询集
+        query_page: int 需要获取的页数
 
-    Returns 
+    Returns: 
         1.一共查询到的数量(count)
         2.查询集对象 list
         3.当前页数 currentPage
         4.totalPages 总页数
-        # return count, _paginate.items, _paginate.page, _paginate.pages
-        :Returns total, result, currentPage, totalPages
+        example:
+        
+            return count, _paginate.items, _paginate.page, _paginate.pages
+            total, result, currentPage, totalPages = _Paginate(a,b)
 
-    Demo
+    Example:
         query_page = request.get('query_page',1)
         total, result, currentPage, totalPages = _Paginate(querys, query_page)
         "total":total,
@@ -94,10 +101,14 @@ def _Paginate(querys, query_page, per_page=10):
 
 
 def StrForDate(s):
-    """
-        字符串转DATE
+    """字符串转DATE
 
-        :param s :str, Yyyy-MM-dd 格式
+    用于接收前端发送的日期字符串并转换为date用于程序使用
+
+    Args:
+        s: str, Yyyy-MM-dd 格式
+
+    Returns: 
         :Returns Date
     """
     try:
@@ -110,8 +121,12 @@ def StrForDate(s):
 def CNSpendTime(time):
     """返回中文的度过时间
 
-        :param time: datetime, 需要计算度过了多久的时间
-        :Returns Str: {}'秒前', {}'分钟', {}'小时前', {}'天前', {}'周前', {}'月前', {}'年前'
+    Args:
+        time: datetime, 需要计算度过了多久的时间
+
+    Returns: 
+        Str: {}'秒前', {}'分钟', {}'小时前', {}'天前', {}'周前', {}'月前', {}'年前'
+
     """
     sout = datetime.datetime.now() - time
     timetype_seconds = datetime.timedelta(seconds=60)

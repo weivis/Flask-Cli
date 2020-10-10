@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 """
     个人常用工具包
@@ -7,7 +7,7 @@
 """
 
 from random import Random
-from datetime import datetime
+import datetime
 import re
 import math
 
@@ -24,6 +24,7 @@ def RandomStr(randomlength=8):
         str += chars[random.randint(0, length)]
     return str   # 将拼接的字符串返回
 
+
 def CheckEmailStr(email):
     """检验字符串是否合法邮箱格式
 
@@ -34,6 +35,7 @@ def CheckEmailStr(email):
     pattern = re.compile(r"\"?([0-9A-Za-z\-_\.]+@\w+\.\w+)\"?")
     return re.match(pattern, email)
 
+
 def Paginator(data, page, num=10):
     """
     列表分页(切片列表, 数据总量，分页总页数)
@@ -41,7 +43,7 @@ def Paginator(data, page, num=10):
     :param data :list 需要分页的数据的列表
     :param page :int 获取页数
     :param num  :int 分页数 默认为10
-    
+
     :return :列表
     :return :总条数
     :return :分页数
@@ -60,6 +62,7 @@ def Paginator(data, page, num=10):
 
     return ret, total, pages
 
+
 def _Paginate(querys, query_page, per_page=10):
     """Sqlachamy query预处理
 
@@ -75,7 +78,7 @@ def _Paginate(querys, query_page, per_page=10):
         # return count, _paginate.items, _paginate.page, _paginate.pages
         :Returns total, result, currentPage, totalPages
 
-    Ues
+    Demo
         query_page = request.get('query_page',1)
         total, result, currentPage, totalPages = _Paginate(querys, query_page)
         "total":total,
@@ -89,6 +92,7 @@ def _Paginate(querys, query_page, per_page=10):
     _paginate = querys.paginate(query_page, per_page=per_page, error_out=False)
     return total, _paginate.items, _paginate.page, _paginate.pages
 
+
 def StrForDate(s):
     """
         字符串转DATE
@@ -98,7 +102,42 @@ def StrForDate(s):
     """
     try:
         year_s, mon_s, day_s = s.split('-')
-        return datetime(int(year_s), int(mon_s), int(day_s))
+        return datetime.datetime(int(year_s), int(mon_s), int(day_s))
     except Exception as e:
         print(e)
         return {}
+
+def CNSpendTime(time):
+    """返回中文的度过时间
+
+        :param time: datetime, 需要计算度过了多久的时间
+        :Returns Str: {}'秒前', {}'分钟', {}'小时前', {}'天前', {}'周前', {}'月前', {}'年前'
+    """
+    sout = datetime.datetime.now() - time
+    timetype_seconds = datetime.timedelta(seconds=60)
+    timetype_hour = datetime.timedelta(hours=1)
+    timetype_days = datetime.timedelta(days=1)
+    timetype_weeks = datetime.timedelta(weeks=1)
+    timetype_month = datetime.timedelta(days=30)
+    timetype_year = datetime.timedelta(days=365)
+
+    if sout < timetype_seconds:
+        return str(int(sout.seconds)) + '秒前'
+
+    if sout < timetype_hour:
+        return str(int(sout.seconds / 60)) + '分钟'
+
+    elif sout < timetype_days:
+        return str(int(sout.seconds / 60 / 60)) + '小时前'
+
+    elif sout < timetype_weeks:
+        return str(int(sout.days)) + '天前'
+
+    elif sout < timetype_month:
+        return str(int(sout.days / 7)) + '周前'
+
+    elif sout < timetype_year:
+        return str(int(sout.days / 30)) + '月前'
+
+    else:
+        return str(int(sout.days / 365)) + '年前'

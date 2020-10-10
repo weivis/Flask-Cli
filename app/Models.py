@@ -36,16 +36,21 @@
         if "userinfo" in filter:
             json = dict(json,**{"userinfo": 用户表.query.filter_by(id=self.用户id).first().getUserinfo() })
 
-        范文:
+		使用范文:
 	        def toDict(self, filter=[]):
-	            """
-	                filter, [], 可选参数
-	                    :无
-	            """
+
 	            json = {
 	                'id': id,
 	            }
 	            return json
+
+	事务:
+		flush: 写数据库，但不提交，也就是事务未结束
+		commit: 是先调用flush写数据库，然后提交，结束事务，并开始新的事务
+		flush之后你才能在这个Session中看到效果，而commit之后你才能从其它Session中看到效果
+		db.session.add(mapping)
+    	db.session.flush()
+		db.session.commit()
 """
 
 from datetime import datetime

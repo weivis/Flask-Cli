@@ -1,6 +1,6 @@
 # Flask-Cli
 
-    自己用的Flask 脚手架[参照Google Python编写规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
+自己用的Flask 脚手架 [参照Google Python编写规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
 
 
 ## 集成

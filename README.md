@@ -1,6 +1,6 @@
 # Flask-Cli
 
-自己用的Flask 脚手架 [参照Google Python编写规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
+自己用的Flask 脚手架 注释[参照Google Python编写规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
 
 
 ## 集成
@@ -11,13 +11,16 @@
     Email.py 邮件发送模块
 
     Blueprint
-    flask_caching
-    flask_cors
-    flask_sqlalchemy
-    flask_docs
-    flask_mail
-    flask_script
-    flask_migrate
+    Flask
+    Flask-Caching   
+    Flask-Cors      
+    Flask-Docs      
+    Flask-Mail      
+    Flask-Migrate   
+    Flask-RESTful   
+    Flask-Script    
+    Flask-SQLAlchemy
+    mysqlclient
 
 ## Config
 ``` python

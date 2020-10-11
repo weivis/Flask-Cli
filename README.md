@@ -8,13 +8,15 @@
 [项目基于工厂模式搭建]
 
 # 内置的现成模块 可直接用
-    Models.py 数据库类
-    Email.py 邮件发送模块
+    Models.py   数据库类
+    Email.py    邮件发送模块
+    upload      多用上传模块
 
 # 项目文件和结构说明
     |-manage.py
     |-requirements.txt
     |-app
+        |-upload            多用上传模块
         |-__init__.py       构建工厂
         |-Blueprint.py      蓝图注册
         |-Config.py         配置文件
@@ -25,6 +27,7 @@
         |-Models.py         数据库类
         |-Startprint.py     启动打印
         |-Tool.py           小工具
+        |-RAM.py            项目运行时储存的共享参数
     |-env
     |-ini
 

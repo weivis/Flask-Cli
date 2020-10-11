@@ -1,7 +1,7 @@
 from flask import jsonify
 import time
 
-def ReturnRequest(code, msg=None, data):
+def ReturnRequest(code, msg, data):
     """全局返回请求结果
 
     Args:

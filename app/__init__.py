@@ -5,6 +5,7 @@ from app.Extensions import config_extensions
 from app.Errorhandler import config_errorhandler
 from app.Startprint import config_startprint
 from app.Config import config
+from app.RAM import AppRAM
 
 def create_app(runConfig='default'):
     """构建入口 create_app()
@@ -25,6 +26,8 @@ def create_app(runConfig='default'):
     app = Flask(__name__, static_folder='static')
 
     app.config.from_object(config[runConfig])
+
+    AppRAM.runConfig = runConfig
 
     config_extensions(app)
 

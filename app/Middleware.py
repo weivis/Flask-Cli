@@ -2,9 +2,7 @@
 from functools import wraps
 from flask import request
 from app.Common import ReturnRequest
-
-from app.Models.db_Account import AccountAdmin, AccountUser
-
+from app.Models import AccountAdmin, AccountUser
 from app.Config import BaseConfig
 
 def POST(func=None):
@@ -54,21 +52,21 @@ def TOKEN(permission):
     return decorator
 
 class Auth:
-        """用户Token认证.
+    """用户Token认证.
 
-        使用前需要设置Auth内__init__下的用户表管理表的指向
-        Adminclass = 管理员表类
-        Userclass = 用户表类
+    使用前需要设置Auth内__init__下的用户表管理表的指向
+    Adminclass = 管理员表类
+    Userclass = 用户表类
 
-        Args:
-            permission:
-                判断用户是什么类型用户并查找用户Token是否正确.
-                如果是1 查询管理员表 2查询用户表
+    Args:
+        permission:
+            判断用户是什么类型用户并查找用户Token是否正确.
+            如果是1 查询管理员表 2查询用户表
 
-            token:
-                用户请求的Token
+        token:
+            用户请求的Token
 
-        """
+    """
     def __init__(self, token, permission):
 
         # 设置类对象

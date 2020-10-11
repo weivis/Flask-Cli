@@ -3,6 +3,7 @@
     引入蓝图模块
 """
 from app.demo import demo
+from app.upload import upload
 
 """
     配置蓝图映
@@ -10,6 +11,7 @@ from app.demo import demo
 """
 DEFAULT_BLUEPRINT = (
     (demo, '/demo'),
+    (upload, '/upload'),
 )
 
 def config_blueprint(app):

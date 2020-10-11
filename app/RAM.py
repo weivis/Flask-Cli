@@ -1,0 +1,2 @@
+class AppRAM:
+    runConfig = ''

@@ -38,7 +38,7 @@ class BaseConfig:
     # Flask-Docs参数(API_DOC_MEMBER:蓝图名, RESTFUL_API_DOC_EXCLUDE:排除的api名, APIDOC_VERSION: api文档版本, APIDOC_TITLE: api文档标题)
     APIDOC_TITLE = ""
     APIDOC_VERSION = "0.0"
-    API_DOC_MEMBER = ['demo']
+    API_DOC_MEMBER = ['demo','upload']
     RESTFUL_API_DOC_EXCLUDE = []
 
 

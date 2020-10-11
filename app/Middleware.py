@@ -12,7 +12,7 @@ def POST(func=None):
         if request.method == 'POST':
             return func(request, *args, **kwargs)
         else:
-            return ReturnRequest(405,'请求方法不对','')
+            return ReturnRequest((405,'请求方法不对',''))
     return wrapper
 
 def TOKEN(permission):
@@ -43,11 +43,10 @@ def TOKEN(permission):
                     return func(request, *args, **kwargs )
 
                 else:
-                    c,m,d = auth.errormsg()
-                    return ReturnRequest(c,m,d)
+                    return ReturnRequest(auth.errormsg())
 
             else:
-                return ReturnRequest(405,'请求方法不正确',{})
+                return ReturnRequest((405,'请求方法不正确',{}))
         return wrapper
     return decorator
 

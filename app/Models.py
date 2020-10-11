@@ -57,49 +57,49 @@
 from datetime import datetime
 from app.Extensions import db
 
+
 class BaseModel(object):
-	"""模型基类，为每个模型补充创建时间与更新时间
-		
-	可以继承该基类给每个表加上create_time， update_time
+    """模型基类，为每个模型补充创建时间与更新时间
 
-	create_time:
-		行创建时间
+    可以继承该基类给每个表加上create_time， update_time
 
-	update_time:
-		每次该数据发送变化时会被更新
+    create_time:
+            行创建时间
 
-	"""
-	id = db.Column(db.Integer, primary_key=True)
-	create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-	update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+    update_time:
+            每次该数据发送变化时会被更新
+
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+
+    def __repr__(self):
+        return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
 
 
 class DemoTable(BaseModel, db.Model):
-	__tablename__ = 'demo_table'
-	title = db.Column(db.String(255))
-	content = db.Column(db.Text)
+    __tablename__ = 'demo_table'
+    title = db.Column(db.String(255))
+    content = db.Column(db.Text)
 
-class AccountAdmin(db.Model):
-		
-	__tablename__ = 'account_admin'
-	id = db.Column(db.Integer, primary_key=True)
-	token = db.Column(db.Text)
-	account = db.Column(db.Text)
-	username = db.Column(db.String(255))
-	password = db.Column(db.Text)
-	create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-	update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
-class AccountUser(db.Model):
-		
-	__tablename__ = 'account_user'
-	id = db.Column(db.Integer, primary_key=True)
-	token = db.Column(db.Text)
-	email = db.Column(db.Text)
-	head = db.Column(db.Text)
-	introduce = db.Column(db.Text)
-	username = db.Column(db.String(255))
-	password = db.Column(db.Text)
-	status = db.Column(db.Integer, default=0)
-	create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-	update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+class AccountAdmin(BaseModel, db.Model):
+
+    __tablename__ = 'account_admin'
+    token = db.Column(db.Text)
+    account = db.Column(db.Text)
+    username = db.Column(db.String(255))
+    password = db.Column(db.Text)
+
+
+class AccountUser(BaseModel, db.Model):
+
+    __tablename__ = 'account_user'
+    token = db.Column(db.Text)
+    email = db.Column(db.Text)
+    head = db.Column(db.Text)
+    introduce = db.Column(db.Text)
+    username = db.Column(db.String(255))
+    password = db.Column(db.Text)
+    status = db.Column(db.Integer, default=0)

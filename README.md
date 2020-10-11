@@ -106,3 +106,15 @@ Windows: env/scripts/activate
 # install pip lib in env
 (env) pip install -r requirements.txt
 ```
+
+## 统一返回说明
+
+    requestStatus: 200
+        code    业务码
+        data    数据
+        msg     消息
+    
+    requestStatus: !200
+        请求异常 不会返回数据
+
+    先判断status 后判断code

@@ -48,10 +48,10 @@ class DevelopmentConfig(BaseConfig):
     """
 
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "http://127.0.0.1/"
+    SQLALCHEMY_DATABASE_URI = "mysql://root:@127.0.0.1:3306/flask-cli?charset=utf8mb4"
 
     # 文件加载地址
-    STATIC_LOADPATH = ""
+    STATIC_LOADPATH = "http://127.0.0.1/"
 
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25
@@ -65,10 +65,10 @@ class ProductionConfig(BaseConfig):
     """
     
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = "http://192.168.0.1/"
+    SQLALCHEMY_DATABASE_URI = ""
 
     # 文件加载地址
-    STATIC_LOADPATH = ""
+    STATIC_LOADPATH = "http://192.168.0.1/"
 
 config = {
     'development': DevelopmentConfig,

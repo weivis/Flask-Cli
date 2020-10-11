@@ -76,24 +76,24 @@ class BaseModel(object):
 
 class DemoTable(BaseModel, db.Model):
 	__tablename__ = 'demo_table'
+	title = db.Column(db.String(255))
+	content = db.Column(db.Text)
 
-
-class AccountAdmin(BaseModel, db.Model):
+class AccountAdmin(db.Model):
 		
 	__tablename__ = 'account_admin'
 	id = db.Column(db.Integer, primary_key=True)
-
 	token = db.Column(db.Text)
 	account = db.Column(db.Text)
 	username = db.Column(db.String(255))
 	password = db.Column(db.Text)
-
+	create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
+	update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
 class AccountUser(db.Model):
 		
 	__tablename__ = 'account_user'
 	id = db.Column(db.Integer, primary_key=True)
-
 	token = db.Column(db.Text)
 	email = db.Column(db.Text)
 	head = db.Column(db.Text)
@@ -101,3 +101,5 @@ class AccountUser(db.Model):
 	username = db.Column(db.String(255))
 	password = db.Column(db.Text)
 	status = db.Column(db.Integer, default=0)
+	create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
+	update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间

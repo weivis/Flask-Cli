@@ -45,7 +45,7 @@
 ## Production
 ``` sh
 # 部署路径
-/home/{用户目录：默认ubuntu }/Service/{项目}
+/home/{用户目录：默认ubuntu }/Service/{项目}/Api # Api是配置文件默认的项目文件夹名
 
 # 部署要求 Supervisor Uwsgi Nginx Mysql Redis Python
 

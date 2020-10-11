@@ -15,7 +15,7 @@ def POST(func=None):
             return ReturnRequest(405,'请求方法不对','')
     return wrapper
 
-def Token(permission):
+def TOKEN(permission):
     """
     Token验证
     

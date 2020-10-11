@@ -16,7 +16,7 @@
     |-manage.py
     |-requirements.txt
     |-app
-        |-upload            多用上传模块
+        |-upload            文件上传模块
         |-__init__.py       构建工厂
         |-Blueprint.py      蓝图注册
         |-Config.py         配置文件

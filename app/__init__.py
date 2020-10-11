@@ -20,8 +20,6 @@ def create_app(runConfig='default'):
     :config_errorhandler 载入异常请求处理
     :config_startprint 载入启动打印
     """
-    
-    print("Run in : <",runConfig,"> Config")
 
     app = Flask(__name__, static_folder='static')
 

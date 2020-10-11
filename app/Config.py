@@ -27,7 +27,7 @@ class BaseConfig:
     """
 
     RUNSERVER_IP = '127.0.0.1'
-    RUNSERVER_PORT = 80
+    RUNSERVER_PORT = 8080
 
     # Token失效时默认返回
     ERRORTOKEN = 10086

@@ -71,11 +71,9 @@ class BaseModel(object):
 	"""
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-    update_time = db.Column(
-        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
 
 class DemoTable(BaseModel, db.Model):
 
     __tablename__ = 'demo_table'
-    id = db.Column(db.Integer, primary_key=True)

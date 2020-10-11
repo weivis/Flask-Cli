@@ -156,3 +156,10 @@ def CNSpendTime(time):
 
     else:
         return str(int(sout.days / 365)) + '年前'
+
+def GenerateIdentification(material):
+    '''
+        生成数据的唯一标识
+    '''
+    t = int(time.time())
+    return str(RandomStr() + str(material) + str(t))

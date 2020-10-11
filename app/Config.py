@@ -25,6 +25,9 @@ class BaseConfig:
         基本配置类
     """
 
+    RUNSERVER_IP = '127.0.0.1'
+    RUNSERVER_PORT = 80
+
     # 跨域密钥
     SECRET_KEY = '\x12my\x0bVO\xeb\xf8\x18\x15\xc5_?\x91\xd7h\x06AC'
 
@@ -42,7 +45,7 @@ class DevelopmentConfig(BaseConfig):
 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = ""
-    
+
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25
     MAIL_USE_TLS = True

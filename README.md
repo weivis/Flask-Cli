@@ -53,6 +53,12 @@ python manage.py db upgrade
 ## Pipenv Packages
 
 ``` sh
+# install virtualenv
+pip install virtualenv
+
+# create env
+virtualenv env
+
 # install pip lib
 pip install -r requirements.txt
 ```

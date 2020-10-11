@@ -47,6 +47,7 @@
 
 ## Start
 ``` sh
+# start project
 (env)python manager.py runserver
 
 # 见到输出台打印以下内容表示启动成功
@@ -79,13 +80,6 @@ app/Config.py
 
 DevelopmentConfig
 ProductionConfig
-```
-
-## Development Setup
-
-``` sh
-# start project
-python manager.py runserver
 ```
 
 ## Migrations

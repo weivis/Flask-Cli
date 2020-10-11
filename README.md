@@ -50,7 +50,7 @@
 # 部署要求 Supervisor Uwsgi Nginx Mysql Redis Python
 
 # 配置文件路径
-|-项目
+|-Api
     |-app
     |-env
     |-ini

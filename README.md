@@ -45,6 +45,17 @@
     mysqlclient
 ```
 
+## Start
+``` sh
+(env)python manager.py runserver
+
+# 见到输出台打印以下内容表示启动成功
+---------------------------------------------------------------------------------------------
+启动时间: 2020-10-12 05:57:29.058991
+Run in    :  < development > Config
+Live Docs :  http://127.0.0.1:80/docs/api/
+```
+
 ## Production
 ``` sh
 # 部署路径

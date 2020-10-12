@@ -113,7 +113,8 @@ class BaseModel_Account(object):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.Text)
     create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+    update_time = db.Column(
+        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
     @classmethod
     def _get(cls, id):

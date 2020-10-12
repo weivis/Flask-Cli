@@ -52,9 +52,16 @@ def gentoken(request):
 def gentoken_foraccount(request):
     """Token生成测试 给用户更新Token"""
     from app.Models import AccountAdmin
-    user = AccountAdmin._get(9)
+    user = AccountAdmin.query.get(9)
     print(user)
     print("oldtoken: ", user.token)
     user._set_token()
     print(user.toDict())
+
+    print("AAAAAAAAAAAAAAA",AccountAdmin.query.get(20))
+
+    q = AccountAdmin.query.filter().all()
+
+    print([i.toDict() for i in q])
+
     return ReturnRequest(views.test(request.json))

@@ -77,9 +77,9 @@ class BaseModel(object):
     update_time = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
-    def _get(self, id):
-        """用id获取单条数据"""
-        return self.query.filter_by(id=id).first()
+    # def _get(self, id):
+    #     """用id获取单条数据"""
+    #     return self.query.filter_by(id=id).first()
 
     def _update(self):
         db.session.add(self)
@@ -109,6 +109,9 @@ class BaseModel_Account(object):
         重置token
         account.self.token = None
 
+    _is_correct_password(plaintext):
+        检验密码 正确返回True
+
     """
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.Text)
@@ -116,10 +119,10 @@ class BaseModel_Account(object):
     update_time = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
 
-    @classmethod
-    def _get(cls, id):
-        """用id获取单条数据"""
-        return cls.query.filter_by(id=id).first()
+    # @classmethod
+    # def _get(cls, id):
+    #     """用id获取单条数据"""
+    #     return cls.query.filter_by(id=id).first()
 
     def _set_token(self):
         """设置新的Token"""

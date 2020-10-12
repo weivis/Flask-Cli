@@ -21,10 +21,17 @@
         |-Blueprint.py      蓝图注册
         |-Config.py         配置文件
         |-Email.py          邮件发送模块
+            |-SeedEmail 邮件发送方法
         |-Errorhandler.py   错误请求配置
         |-Extensions.py     引入依赖注册
         |-Middleware.py     中间件
+            |-Token 请求认证
+            |-POST 普通请求
         |-Models.py         数据库类
+            |-数据库基类
+            |-用户表
+            |-管理员表
+            |-异常记录表
         |-Startprint.py     启动打印
         |-Tool.py           小工具
         |-RAM.py            项目运行时储存的共享参数
@@ -55,6 +62,26 @@
 启动时间: 2020-10-12 05:57:29.058991
 Run in    :  < development > Config
 Live Docs :  http://127.0.0.1:80/docs/api/
+```
+
+## Create NewAdmin
+``` sh
+# create manager
+(env)python manager.py
+
+    @ createadmin
+    -u  用户名
+    -a  账户
+    -p  密码
+
+    # python manage.py createadmin -u Administrator -a admin -p 123456 
+
+# 看到打印台输出以下内容表示创建成功
+
+创建新管理员 < Administrator  ID: 1  > 成功
+账户: admin
+密码: 123456
+
 ```
 
 ## Production

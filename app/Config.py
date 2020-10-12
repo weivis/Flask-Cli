@@ -18,7 +18,6 @@
         MAIL_USE_TLS = True
         MAIL_USERNAME = ''
         MAIL_PASSWORD = ''
-
 '''
 
 class BaseConfig:
@@ -51,7 +50,7 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = "mysql://root:@127.0.0.1:3306/flask-cli?charset=utf8mb4"
 
     # 文件加载地址
-    STATIC_LOADPATH = "http://127.0.0.1/"
+    STATIC_LOADPATH = "http://127.0.0.1"
 
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25
@@ -68,7 +67,7 @@ class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = ""
 
     # 文件加载地址
-    STATIC_LOADPATH = "http://192.168.0.1/"
+    STATIC_LOADPATH = "http://192.168.0.1"
 
 config = {
     'development': DevelopmentConfig,

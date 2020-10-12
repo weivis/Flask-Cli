@@ -30,20 +30,20 @@
         1.
         filter = ['id']
         if "id" in filter:
-            json = dict(json,**{"id": self.id})
+            json = dict(json,**{"id": self.id})
 
         2.
         filter = ['userinfo']
         if "userinfo" in filter:
-            json = dict(json,**{"userinfo": 用户表.query.filter_by(id=self.用户id).first().getUserinfo() })
+            json = dict(json,**{"userinfo": 用户表.query.filter_by(id=self.用户id).first().getUserinfo() })
 
-		使用范文:
-	        def toDict(self, filter=[]):
+        使用范文:
+            def toDict(self, filter=[]):
 
-	            json = {
-	                'id': id,
-	            }
-	            return json
+                json = {
+                    'id': id,
+                }
+                return json
 
 	事务:
 		flush: 写数据库，但不提交，也就是事务未结束
@@ -56,7 +56,8 @@
 
 from datetime import datetime
 from app.Extensions import db
-
+from flask_bcrypt import check_password_hash, generate_password_hash
+import hashlib
 
 class BaseModel(object):
     """模型基类，为每个模型补充创建时间与更新时间
@@ -78,10 +79,35 @@ class BaseModel(object):
         return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
 
 
+class ErrorLog(BaseModel, db.Model):
+    """用于储存程序发生的错误到数据库"""
+
+    __tablename__ = 'error_log'
+    address = db.Column(db.String(255))
+    error_content = db.Column(db.Text)
+    level = db.Column(db.Integer, default=0)
+
+    def __init__(self, address, error_content, level = 0):
+        self.address = address
+        self.error_content = error_content
+        self.level = level
+        self.update()
+
+    def update(self):
+        db.session.add(self)
+        db.session.commit()
+
+
 class DemoTable(BaseModel, db.Model):
     __tablename__ = 'demo_table'
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
+
+    def toDict(self):
+        return dict(
+            title=self.title,
+            content=self.content
+        )
 
 
 class AccountAdmin(BaseModel, db.Model):
@@ -91,6 +117,38 @@ class AccountAdmin(BaseModel, db.Model):
     account = db.Column(db.Text)
     username = db.Column(db.String(255))
     password = db.Column(db.Text)
+
+
+    def createadmin(self, username, account, password):
+        self.account = account
+        self.username = username
+        self.password = password
+        self.update()
+        return self
+
+
+    def SetToken(self):
+        """设置新的Token"""
+        from app.Tool import GenerateToken
+        self.token = GenerateToken(self.account)
+        db.session.commit()
+        return True
+
+
+    def ClearToken(self):
+        """清除Token"""
+        self.token = None
+        return True
+
+
+    def is_correct_password(self, plaintext):
+        """判断密码 正确返回True"""
+        if check_password_hash(self.password, plaintext):
+            return True
+
+    def update(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class AccountUser(BaseModel, db.Model):
@@ -103,3 +161,28 @@ class AccountUser(BaseModel, db.Model):
     username = db.Column(db.String(255))
     password = db.Column(db.Text)
     status = db.Column(db.Integer, default=0)
+
+    def SetToken(self):
+        """设置新的Token"""
+        from app.Tool import GenerateToken
+        self.token = GenerateToken(self.account)
+        db.session.commit()
+        return True
+
+
+    def SetUserStatus(self, newstatus):
+        """设置用户Status"""
+        self.status = newstatus
+        db.session.commit()
+
+
+    def ClearToken(self):
+        """清除Token"""
+        self.token = None
+        return True
+
+
+    def is_correct_password(self, plaintext):
+        """判断密码 正确返回True"""
+        if check_password_hash(self.password, plaintext):
+            return True

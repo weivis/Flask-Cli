@@ -22,6 +22,16 @@ def upload_file(request):
             错误: Key值不能为空
             文件类型不允许
             错误: 不允许使用的Key值
+
+    ReturnJson:
+        {
+            "code": 200,
+            "data": {
+                "filename": "20201012115423509.jpg",
+                "lodpath": "http://127.0.0.1/static/head/20201012115423509.jpg",
+                "ospath": "/head/20201012115423509.jpg"
+            },
+            "msg": "ok"
+        }
     """
-    c,m,d = views.upload_file(request)
-    return ReturnRequest(c,m,d)
+    return ReturnRequest(views.upload_file(request))

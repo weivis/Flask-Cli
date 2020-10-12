@@ -10,6 +10,8 @@ from random import Random
 import datetime
 import re
 import math
+import time
+import hashlib
 
 def RandomStr(randomlength=8):
     """生成随机字符串
@@ -25,6 +27,11 @@ def RandomStr(randomlength=8):
     for i in range(randomlength):
         str += chars[random.randint(0, length)]
     return str   # 将拼接的字符串返回
+
+
+def T_Stamp():
+    """获取时间戳"""
+    return int(time.time())
 
 
 def CheckEmailStr(email):
@@ -118,6 +125,7 @@ def StrForDate(s):
         print(e)
         return {}
 
+
 def CNSpendTime(time):
     """返回中文的度过时间
 
@@ -157,9 +165,28 @@ def CNSpendTime(time):
     else:
         return str(int(sout.days / 365)) + '年前'
 
+
 def GenerateIdentification(material):
-    '''
-        生成数据的唯一标识
-    '''
-    t = int(time.time())
-    return str(RandomStr() + str(material) + str(t))
+    """生成数据的唯一标识
+    Args:
+        material: str,生成材料
+
+    Returns: 
+        str: RandomStr + material + T_Stamp
+    """
+    return str(RandomStr() + str(material) + str(T_Stamp()))
+
+
+def GenerateToken(plaintext=None):
+    """生成Token
+
+    生成规则, md5(plaintext + T_Stamp + RandomStr)
+
+    Args:
+        plaintext: str, 自定义字符串
+
+    Returns: 
+        str
+    """
+    sourcestr = plaintext + str(T_Stamp()) + RandomStr()
+    return str(hashlib.md5(sourcestr.encode("utf8")).hexdigest())

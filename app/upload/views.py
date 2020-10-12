@@ -7,6 +7,8 @@ from io import *
 from app.Config import config
 from app.RAM import AppRAM
 
+from app.upload import FileCompress
+
 """
     关于 UPLOADFILE_CONFIG的用法
     key: 上传文件的时候必须附带的参数uploadKey : 此处设置的key
@@ -15,32 +17,6 @@ from app.RAM import AppRAM
 UPLOADFILE_CONFIG = {
     'userhead': '/head',
 }
-
-
-def FileCompress_Head(files):
-    """图片处理:头像裁剪"""
-    from PIL import Image
-    file = Image.open(files)
-
-    topw = [0, 0]
-
-    xl, yl = file.size
-    print(xl, yl)
-
-    if xl > yl:
-        topw = [yl, 1]
-        print(topw)
-    else:
-        topw = [xl, 0]
-        print(topw)
-
-    px = topw[0]
-
-    file = file.crop((0, 0, px, px))
-
-    print(file.size)
-    return file
-
 
 def CreateNewFilename(ext):
     """生成新的随机文件名
@@ -128,7 +104,7 @@ def upload_file(request):
 
     # 根据不同的上传标签制定不停的文件处理流
     if upload_key in ['userhead']:
-        files = FileCompress_Head(file)
+        files = FileCompress.HeadImg(file)
     else:
         files = file
 
@@ -138,13 +114,15 @@ def upload_file(request):
 
     # 需要生成缩略图的
     if upload_key == 'photo':
-        FileCompress_Head(request.files['file']).save(
+        FileCompress.HeadImg(request.files['file']).save(
             os.path.join(os.path.abspath('app/static/'), newfilename))
 
-    STATIC_LOADPATH = config[AppRAM.runConfig].get('STATIC_LOADPATH', None)
-    if STATIC_LOADPATH:
-        LOADPATH = STATIC_LOADPATH
-    else:
+    # 加载地址
+    try:
+        LOADPATH = config[AppRAM.runConfig].STATIC_LOADPATH
+
+    except Exception as e:
+        print(e)
         LOADPATH = ""
 
     return 200, 'ok', {

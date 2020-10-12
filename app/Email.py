@@ -2,6 +2,8 @@ from flask import current_app
 from app.Extensions import mail
 from flask_mail import Message
 from threading import Thread
+from app.Config import config
+from app.RAM import AppRAM
 
 class EmailConfig:
     """发送邮件模块存放个性配置
@@ -14,15 +16,15 @@ class EmailConfig:
     EMAIL_TITLE_PREFIX = ''
 
 
-def SeedEmail(sender, recipients, email_title, email_body='', email_html=''):
+def SeedEmail(recipients, email_title, email_body='', email_html='', sender=None):
     """发送邮件
 
     Args:
-        sender: Str, 发件人 和 MAIL_USERNAME 一致即可
         recipients: Any, 收件人
         email_title: Str, 邮件标题
         email_body: Str, 这个我也不是很懂
         email_html: Str, 邮件html内容
+        sender: Str, 发件人 默认取Config内的MAIL_USERNAME参数
 
     Example:
         SeedEmail(
@@ -34,6 +36,9 @@ def SeedEmail(sender, recipients, email_title, email_body='', email_html=''):
         )
 
     """
+
+    if not sender:
+        sender = config[AppRAM.runConfig].MAIL_USERNAME
 
     # 创建上下文
     app = current_app._get_current_object()

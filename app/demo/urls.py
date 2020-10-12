@@ -1,24 +1,47 @@
 from app.demo import demo, views
 from app.Common import ReturnRequest
 from app.Middleware import POST, TOKEN
+from app.Email import SeedEmail
+from app.Tool import GenerateToken
 
 # Post测试
-@demo.route('/', methods=["POST"])
+@demo.route('/post', methods=["POST"])
 @POST
-def test(request):
-    """测试"""
+def Post_Middleware_Request_Test(request):
+    """POST中间件测试"""
     return ReturnRequest(views.test(request.json))
 
 # Token测试
-@demo.route('/token', methods=["POST"])
+@demo.route('/token/user', methods=["POST"])
 @TOKEN(2)
-def tokentest(request):
-    """测试"""
+def Token_Middleware_UserRequest_Test(request):
+    """TOKEN中间件测试(一般用户)"""
     return ReturnRequest(views.test(request.json))
 
 # AdminToken测试
-@demo.route('/admintoken', methods=["POST"])
+@demo.route('/token/admin', methods=["POST"])
 @TOKEN(1)
-def admintokentest(request):
-    """测试"""
+def Token_Middleware_AdminRequest_Test(request):
+    """TOKEN中间件测试(管理员)"""
+    return ReturnRequest(views.test(request.json))
+
+# Email测试
+@demo.route('/seedemail', methods=["POST"])
+@POST
+def Seed_Email_Test(request):
+    """邮件发送测试"""
+    SeedEmail(
+        recipients = ['442981412@qq.com'],
+        email_title = "测试",
+        email_body = "BODY",
+        email_html = "<h>测试</h>"
+    )
+    return ReturnRequest(views.test(request.json))
+
+# Email测试
+@demo.route('/gentoken', methods=["POST"])
+@POST
+def gentoken(request):
+    """Token生成测试"""
+    print(GenerateToken("111"))
     return ReturnRequest(views.test(request.json))

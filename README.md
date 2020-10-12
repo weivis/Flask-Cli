@@ -93,7 +93,6 @@ Live Docs :  http://127.0.0.1:80/docs/api/
         create_time
         update_time
 
-        _get()
         _update()
 
     BaseModel_Account
@@ -102,7 +101,6 @@ Live Docs :  http://127.0.0.1:80/docs/api/
         create_time
         update_time
 
-        _get()
         _set_token()
         _is_correct_password()
         _update()

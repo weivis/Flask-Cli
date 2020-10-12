@@ -1,7 +1,5 @@
-from app.Models import DemoTable
+from app.Models import DemoTable, AccountAdmin
 
 def test(request):
-    print(request)
-    # a = DemoTable.query.filter_by(id=1).first()
-    # print(a)
-    return 200, "", {}
+    a = AccountAdmin.query.filter_by(id=1).first()
+    return 200, "", a.toDict()

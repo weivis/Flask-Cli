@@ -84,6 +84,32 @@ Live Docs :  http://127.0.0.1:80/docs/api/
 
 ```
 
+## BaseModel
+``` sh
+# Models内提供两个基础模型基类
+
+    BaseModel
+        id
+        create_time
+        update_time
+
+        _get()
+        _update()
+
+    BaseModel_Account
+        id
+        token
+        create_time
+        update_time
+
+        _get()
+        _set_token()
+        _is_correct_password()
+        _update()
+        _clear_token()
+
+```
+
 ## Production
 ``` sh
 # 部署路径

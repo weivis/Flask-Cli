@@ -189,4 +189,5 @@ def GenerateToken(plaintext=None):
         str
     """
     sourcestr = plaintext + str(T_Stamp()) + RandomStr()
+    print(plaintext, sourcestr)
     return str(hashlib.md5(sourcestr.encode("utf8")).hexdigest())

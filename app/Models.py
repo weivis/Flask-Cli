@@ -59,6 +59,7 @@ from app.Extensions import db
 from flask_bcrypt import check_password_hash, generate_password_hash
 import hashlib
 
+
 class BaseModel(object):
     """模型基类，为每个模型补充创建时间与更新时间
 
@@ -73,10 +74,118 @@ class BaseModel(object):
     """
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+    update_time = db.Column(
+        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+
+    def _get(self, id):
+        """用id获取单条数据"""
+        return self.query.filter_by(id=id).first()
+
+    def _update(self):
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
+
+
+class BaseModel_Account(object):
+    """用户表模型基类
+
+    为用户表和管理表继承相同字段和公共方法
+
+    _set_token():
+        设置token
+
+    _get(id):
+        根据id获取单个对象
+        return id.first()
+
+    update():
+        提交数据库
+        self.commit()
+
+    _clear_token():
+        重置token
+        account.self.token = None
+
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.Text)
+    create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
+
+    @classmethod
+    def _get(cls, id):
+        """用id获取单条数据"""
+        return cls.query.filter_by(id=id).first()
+
+    def _set_token(self):
+        """设置新的Token"""
+        from app.Tool import GenerateToken
+        self.token = GenerateToken(str(self.account))
+        db.session.commit()
+        return True
+
+    def _is_correct_password(self, plaintext):
+        """判断密码 正确返回True"""
+        if check_password_hash(self.password, plaintext):
+            return True
+
+    def _update(self):
+        """提交至数据库"""
+        db.session.add(self)
+        db.session.commit()
+
+    def _clear_token(self):
+        """清除Token"""
+        self.token = None
+        db.session.commit()
+        return True
+
+    def __repr__(self):
+        return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
+
+
+class AccountAdmin(BaseModel_Account, db.Model):
+    """管理员表"""
+
+    __tablename__ = 'account_admin'
+    account = db.Column(db.Text)
+    username = db.Column(db.String(255))
+    password = db.Column(db.Text)
+
+    def toDict(self):
+        return dict(
+            token=self.token,
+            account=self.account,
+            username=self.username,
+            password=self.password
+        )
+
+    def createadmin(self, username, account, password):
+        self.account = account
+        self.username = username
+        self.password = password
+        self._update()
+        return self
+
+
+class AccountUser(BaseModel, db.Model):
+    """用户表"""
+
+    __tablename__ = 'account_user'
+    email = db.Column(db.Text)
+    head = db.Column(db.Text)
+    introduce = db.Column(db.Text)
+    username = db.Column(db.String(255))
+    password = db.Column(db.Text)
+    status = db.Column(db.Integer, default=0)
+
+    def SetUserStatus(self, newstatus):
+        """设置用户Status"""
+        self.status = newstatus
+        db.session.commit()
 
 
 class ErrorLog(BaseModel, db.Model):
@@ -87,15 +196,11 @@ class ErrorLog(BaseModel, db.Model):
     error_content = db.Column(db.Text)
     level = db.Column(db.Integer, default=0)
 
-    def __init__(self, address, error_content, level = 0):
+    def __init__(self, address, error_content, level=0):
         self.address = address
         self.error_content = error_content
         self.level = level
-        self.update()
-
-    def update(self):
-        db.session.add(self)
-        db.session.commit()
+        self._update()
 
 
 class DemoTable(BaseModel, db.Model):
@@ -108,81 +213,3 @@ class DemoTable(BaseModel, db.Model):
             title=self.title,
             content=self.content
         )
-
-
-class AccountAdmin(BaseModel, db.Model):
-
-    __tablename__ = 'account_admin'
-    token = db.Column(db.Text)
-    account = db.Column(db.Text)
-    username = db.Column(db.String(255))
-    password = db.Column(db.Text)
-
-
-    def createadmin(self, username, account, password):
-        self.account = account
-        self.username = username
-        self.password = password
-        self.update()
-        return self
-
-
-    def SetToken(self):
-        """设置新的Token"""
-        from app.Tool import GenerateToken
-        self.token = GenerateToken(self.account)
-        db.session.commit()
-        return True
-
-
-    def ClearToken(self):
-        """清除Token"""
-        self.token = None
-        return True
-
-
-    def is_correct_password(self, plaintext):
-        """判断密码 正确返回True"""
-        if check_password_hash(self.password, plaintext):
-            return True
-
-    def update(self):
-        db.session.add(self)
-        db.session.commit()
-
-
-class AccountUser(BaseModel, db.Model):
-
-    __tablename__ = 'account_user'
-    token = db.Column(db.Text)
-    email = db.Column(db.Text)
-    head = db.Column(db.Text)
-    introduce = db.Column(db.Text)
-    username = db.Column(db.String(255))
-    password = db.Column(db.Text)
-    status = db.Column(db.Integer, default=0)
-
-    def SetToken(self):
-        """设置新的Token"""
-        from app.Tool import GenerateToken
-        self.token = GenerateToken(self.account)
-        db.session.commit()
-        return True
-
-
-    def SetUserStatus(self, newstatus):
-        """设置用户Status"""
-        self.status = newstatus
-        db.session.commit()
-
-
-    def ClearToken(self):
-        """清除Token"""
-        self.token = None
-        return True
-
-
-    def is_correct_password(self, plaintext):
-        """判断密码 正确返回True"""
-        if check_password_hash(self.password, plaintext):
-            return True

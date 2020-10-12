@@ -45,3 +45,16 @@ def gentoken(request):
     """Token生成测试"""
     print(GenerateToken("111"))
     return ReturnRequest(views.test(request.json))
+
+# 生成Token给用户测试
+@demo.route('/gentoken-foraccount', methods=["POST"])
+@POST
+def gentoken_foraccount(request):
+    """Token生成测试"""
+    from app.Models import AccountAdmin
+    user = AccountAdmin._get(9)
+    print(user)
+    print("oldtoken: ",user.token)
+    user._set_token()
+    print(user.toDict())
+    return ReturnRequest(views.test(request.json))

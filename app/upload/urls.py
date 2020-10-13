@@ -1,10 +1,10 @@
 from app.upload import upload, views
 from app.Common import ReturnRequest
-from app.Middleware import POST
+from app.Middleware import NORMAL
 
 # 上传文件
 @upload.route('/', methods=["POST"])
-@POST
+@NORMAL
 def upload_file(request):
     """多用文件上传接口
     Args:

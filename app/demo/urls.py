@@ -1,12 +1,30 @@
 from app.demo import demo, views
 from app.Common import ReturnRequest
-from app.Middleware import POST, TOKEN
+from app.Middleware import NORMAL, TOKEN
 from app.Email import SeedEmail
 from app.Tool import GenerateToken
 
+from app.Models import AccountAdmin
+
+@demo.route('/', methods=["GET"])
+@NORMAL
+def TEST(request):
+    """快速GET测试入口"""
+    q = AccountAdmin.query.filter().all()
+    print(request)
+
+    user = AccountAdmin.query.get(9)
+    user._set_new_password("123456")
+    user._clear_token()
+
+    li = ""
+    for i in q:
+        li = li + "<li>" + str(i.toDict()) +"</li>"
+    return "<h1>执行完成</h1> <ul>" + li + "</ul>"
+
 
 @demo.route('/post', methods=["POST"])
-@POST
+@NORMAL
 def Post_Middleware_Request_Test(request):
     """POST中间件测试"""
     return ReturnRequest(views.test(request.json))
@@ -27,7 +45,7 @@ def Token_Middleware_AdminRequest_Test(request):
 
 
 @demo.route('/seedemail', methods=["POST"])
-@POST
+@NORMAL
 def Seed_Email_Test(request):
     """邮件发送测试"""
     SeedEmail(
@@ -40,7 +58,7 @@ def Seed_Email_Test(request):
 
 
 @demo.route('/gentoken', methods=["POST"])
-@POST
+@NORMAL
 def gentoken(request):
     """Token生成测试"""
     print(GenerateToken("111"))
@@ -48,10 +66,9 @@ def gentoken(request):
 
 
 @demo.route('/gentoken-foraccount', methods=["POST"])
-@POST
+@NORMAL
 def gentoken_foraccount(request):
     """Token生成测试 给用户更新Token"""
-    from app.Models import AccountAdmin
     user = AccountAdmin.query.get(9)
     print(user)
     print("oldtoken: ", user.token)

@@ -131,6 +131,11 @@ class BaseModel_Account(object):
         db.session.commit()
         return True
 
+    def _set_new_password(self, plaintext):
+        newpassword = generate_password_hash(plaintext)
+        self.password = newpassword
+        self._update()
+
     def _is_correct_password(self, plaintext):
         """判断密码 正确返回True"""
         if check_password_hash(self.password, plaintext):
@@ -161,6 +166,7 @@ class AccountAdmin(BaseModel_Account, db.Model):
 
     def toDict(self):
         return dict(
+            id=self.id,
             token=self.token,
             account=self.account,
             username=self.username,
@@ -170,7 +176,7 @@ class AccountAdmin(BaseModel_Account, db.Model):
     def createadmin(self, username, account, password):
         self.account = account
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password)
         self._update()
         return self
 
@@ -205,6 +211,13 @@ class ErrorLog(BaseModel, db.Model):
         self.error_content = error_content
         self.level = level
         self._update()
+
+    def toDict(self):
+        return dict(
+            address = self.address,
+            error_content = self.error_content,
+            level = self.level
+        )
 
 
 class DemoTable(BaseModel, db.Model):

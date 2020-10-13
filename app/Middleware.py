@@ -6,10 +6,32 @@ from app.Models import AccountAdmin, AccountUser
 from app.Config import BaseConfig
 
 def POST(func=None):
-    """通用Post请求"""
+    """通用Post请求, 准备废弃"""
     @wraps(func)
     def wrapper(*args, **kwargs):
         if request.method == 'POST':
+            return func(request, *args, **kwargs)
+        else:
+            return ReturnRequest((405,'请求方法不对',''))
+    return wrapper
+
+def NORMAL(func=None, method=None):
+    """通用GET, POST请求, 不需要验证TOKEN
+    
+    Args:
+        method: str, 该中间件默认支持GET, POST， PUT， 等多种方法。可以用method = GET or POST 锁定仅支持某一种类型
+    """
+
+    if not method:
+        method = ['GET','POST','PUT']
+
+    else:
+        method = [method]
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+
+        if request.method in method:
             return func(request, *args, **kwargs)
         else:
             return ReturnRequest((405,'请求方法不对',''))

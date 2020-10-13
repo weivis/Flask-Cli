@@ -17,6 +17,7 @@
     |-requirements.txt
     |-app
         |-upload            文件上传模块
+        |-user              蓝图：用户类功能
         |-__init__.py       构建工厂
         |-Blueprint.py      蓝图注册
         |-Config.py         配置文件
@@ -52,6 +53,18 @@
     Flask-Script    
     Flask-SQLAlchemy
     mysqlclient
+```
+
+## 建议
+``` sh
+# 建议采用以下项目格式部署
+|-Service
+    |-Project_name
+        |-Api(Flask-CLi)
+        |-Web(Vue or Recat build Pack)
+        |-Admin(Admin Web Build Pack)
+        |-config(nginx)
+    |-Log
 ```
 
 ## Start

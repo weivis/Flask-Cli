@@ -4,7 +4,7 @@
 """
 from app.demo import demo
 from app.upload import upload
-from app.new_blueprint import new_blueprint
+from app.user import user
 from app.Config import BaseConfig
 
 
@@ -15,7 +15,7 @@ from app.Config import BaseConfig
 DEFAULT_BLUEPRINT = (
     (demo, '/demo'),
     (upload, '/upload'),
-    (new_blueprint, '/new_blueprint')
+    (user, '/user')
 )
 
 def config_blueprint(app):

@@ -35,7 +35,7 @@ class BaseConfig:
     SECRET_KEY = '\x12my\x0bVO\xeb\xf8\x18\x15\xc5_?\x91\xd7h\x06AC'
 
     # Flask-Docs参数(API_DOC_MEMBER:蓝图名, RESTFUL_API_DOC_EXCLUDE:排除的api名, APIDOC_VERSION: api文档版本, APIDOC_TITLE: api文档标题)
-    APIDOC_TITLE = ""
+    APIDOC_TITLE = "Flask-CLi"
     APIDOC_VERSION = "0.0"
 
     # API_DOC_MEMBER是放置要生成API文档的蓝图名 已经在创建蓝图的时候自动生成了 不需要在手动写了
@@ -43,7 +43,6 @@ class BaseConfig:
 
     # 不想生成API文档的蓝图模块可以写在RESTFUL_API_DOC_EXCLUDE里面
     RESTFUL_API_DOC_EXCLUDE = []
-
 
 class DevelopmentConfig(BaseConfig):
     """

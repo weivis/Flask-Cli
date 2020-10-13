@@ -28,8 +28,10 @@ def config_blueprint(app):
     for blueprint, prefix in DEFAULT_BLUEPRINT:
         app.register_blueprint(blueprint, url_prefix=prefix)
 
+        # 自动设置Flas-Docs的API_DOC_MEMBER参数
         blueprintName = str(blueprint.name)
         if blueprintName not in BaseConfig.RESTFUL_API_DOC_EXCLUDE:
+
             # 把蓝图模块名储存起来更新到配置文件
             API_DOC_MEMBER.append(blueprintName)
 

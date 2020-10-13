@@ -2,12 +2,15 @@
 from flask_caching import Cache
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_docs import ApiDoc
 from flask_mail import Mail
+
+from app.Config import BaseConfig
+from flask_docs import ApiDoc
 
 db = SQLAlchemy()
 mail = Mail()
 cache = Cache()
+
 apidoc = ApiDoc()
 
 def config_extensions(app):
@@ -23,5 +26,4 @@ def config_extensions(app):
 
     mail.init_app(app)
 
-    from app.Config import BaseConfig
     apidoc.init_app(app, title=BaseConfig.APIDOC_TITLE, version=BaseConfig.APIDOC_VERSION)

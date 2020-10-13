@@ -110,7 +110,7 @@ class BaseModel_Account(object):
         account.self.token = None
 
     _is_correct_password(plaintext):
-        检验密码 正确返回True
+        检验密码 正确返回True 错误返回None
 
     """
     id = db.Column(db.Integer, primary_key=True)

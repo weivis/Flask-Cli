@@ -14,8 +14,9 @@ def TEST(request):
     print(request)
 
     user = AccountAdmin.query.get(9)
-    user._set_new_password("123456")
-    user._clear_token()
+    print(user._is_correct_password('12345'))
+    # user._set_new_password("123456")
+    # user._clear_token()
 
     li = ""
     for i in q:

@@ -37,6 +37,8 @@
         |-RAM.py            项目运行时储存的共享参数
     |-env
     |-ini
+    |-expand
+        |-new_blueprint     蓝图模板 直接复制到app内修改蓝图注册名即可
 
 # 使用依赖
     Blueprint

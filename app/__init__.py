@@ -22,14 +22,14 @@ def create_app(runConfig='default'):
     """
 
     app = Flask(__name__, static_folder='static')
-
+    
     app.config.from_object(config[runConfig])
-
-    AppRAM.runConfig = runConfig
 
     config_extensions(app)
 
     config_blueprint(app)
+
+    AppRAM.runConfig = runConfig
 
     config_errorhandler(app)
 

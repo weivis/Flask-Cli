@@ -7,9 +7,8 @@ from flask_script import Manager, Shell, Server, Command, Option
 from app.Models import DemoTable, AccountAdmin, AccountUser
 from app.Config import BaseConfig, config
 
-
+# 设置运行模式 production, development
 RUN_CONFIG = 'development'
-
 
 app = create_app(RUN_CONFIG)
 manager = Manager(app)
@@ -33,11 +32,9 @@ class CreateAdmin(Command):
         print("账户:",add.account)
         print("密码:",add.password)
         
-
 manager.add_command("db", MigrateCommand)
 manager.add_command("runserver", Server(port=BaseConfig.RUNSERVER_PORT, host=BaseConfig.RUNSERVER_IP, use_debugger=config[RUN_CONFIG].DEBUG))
 manager.add_command("createadmin", CreateAdmin())
-
 
 if __name__ == '__main__':
     manager.run()

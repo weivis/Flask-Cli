@@ -7,26 +7,29 @@ from app.upload import upload
 from app.user import user
 from app.Config import BaseConfig
 
-
-"""
-    配置蓝图映
-        ()后面必须加, 否则无法正常启动
-"""
 DEFAULT_BLUEPRINT = (
     (demo, '/demo'),
     (upload, '/upload'),
     (user, '/user')
 )
 
-def config_blueprint(app):
+def config_blueprint(app, runConfig):
     """
         读取蓝图配置
+
+        :param runConfig, 运行模式, production
+
+        (线上模式)所有api会增加 '/api' 代理, 非线上模式时无'/api'代理
+
     """
 
     API_DOC_MEMBER = []
 
     for blueprint, prefix in DEFAULT_BLUEPRINT:
-        app.register_blueprint(blueprint, url_prefix=prefix)
+        if runConfig == "production":
+            app.register_blueprint(blueprint, url_prefix = '/api' + prefix)
+        else:
+            app.register_blueprint(blueprint, url_prefix = prefix)
 
         # 自动设置Flas-Docs的API_DOC_MEMBER参数
         blueprintName = str(blueprint.name)

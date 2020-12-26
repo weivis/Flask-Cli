@@ -1,5 +1,7 @@
 # Flask-Cli
 
+> 2020/12/27更新
+
 自己用的Flask 脚手架 注释[参照Google Python编写规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
 
 
@@ -25,7 +27,7 @@
             |-SeedEmail 邮件发送方法
         |-Errorhandler.py   错误请求配置
         |-Extensions.py     引入依赖注册
-        |-Middleware.py     中间件
+        |-Middleware.py     中间件 (2020/12/27废除POST中间件)
             |-Token 请求认证
             |-POST 普通请求
         |-Models.py         数据库类
@@ -40,6 +42,7 @@
     |-ini
     |-expand
         |-new_blueprint     蓝图模板 直接复制到app内修改蓝图注册名即可
+        |-templates         代码模板 内置增删查改的代码(2020/12/27)新增
 
 # 使用依赖
     Blueprint
@@ -73,11 +76,37 @@
 (env)python manager.py runserver
 
 # 见到输出台打印以下内容表示启动成功
+------------------------------------------------------------------------------------------------------------------------
+ ______   __         ______     ______     __  __     ______     __         __
+/\  ___\ /\ \       /\  __ \   /\  ___\   /\ \/ /    /\  ___\   /\ \       /\ \
+\ \  __\ \ \ \____  \ \  __ \  \ \___  \  \ \  _"-.  \ \ \____  \ \ \____  \ \ \
+ \ \_\    \ \_____\  \ \_\ \_\  \/\_____\  \ \_\ \_\  \ \_____\  \ \_____\  \ \_\ 
+  \/_/     \/_____/   \/_/\/_/   \/_____/   \/_/\/_/   \/_____/   \/_____/   \/_/
+
+感谢使用Flask-Cli脚手架(https://github.com/weivis/Flask-Cli), 脚手架作者WeiVi(https://www.weivird.com/) 正在启动中>
+“我不知道第三次世界大战会用哪些武器，但第四次世界大战中人们肯定用的是木棍和石块。” ——阿尔伯特·爱因斯坦 (出自Alice Calaprice所著《The New Quotable Einstein》)
+愿世界无战争
+
+开发模式运行 >
+配置文件      :  development  Config
+启动时间      : 2020-12-27 06:24:11.238707
+Live Docs    :  http://127.0.0.1:8080/docs/api/
+DEBUG Active :  True
+
+```
+
+## Start(Old)
+``` sh
+# start project
+(env)python manager.py runserver
+
+# 见到输出台打印以下内容表示启动成功
 ---------------------------------------------------------------------------------------------
 启动时间: 2020-10-12 05:57:29.058991
 Run in    :  < development > Config
 Live Docs :  http://127.0.0.1:80/docs/api/
 ```
+
 
 ## Create NewAdmin
 ``` sh
@@ -108,18 +137,11 @@ Live Docs :  http://127.0.0.1:80/docs/api/
         create_time
         update_time
 
-        _update()
-
     BaseModel_Account
         id
         token
         create_time
         update_time
-
-        _set_token()
-        _is_correct_password()
-        _update()
-        _clear_token()
 
 ```
 

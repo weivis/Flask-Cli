@@ -2,8 +2,8 @@
 
 """
     个人常用工具包
-    update 20201002
-    ver 0.1
+    update 20201227
+    ver 0.3
 """
 
 from random import Random
@@ -12,6 +12,46 @@ import re
 import math
 import time
 import hashlib
+
+def calc_crc16(data, len):
+    """生成CRC16校验码"""
+    data = bytearray.fromhex(data)
+    # print(data)
+    crc = 0xFFFF
+    for pos in range(0, len):
+        crc ^= data[pos]
+        for i in range(8):
+            if (crc & 1) != 0:
+                crc >>= 1
+                crc ^= 0xA001
+            else:
+                crc >>= 1
+    return ((crc & 0xff) << 8) + (crc >> 8)
+
+
+def HextoStr(data):
+    """十六进制转字符串"""
+    data = binascii.a2b_hex(data)
+    data = text.decode(encoding='utf-8')
+    return data
+
+
+def GenerateRandomHex(len=12):
+    """生成16进制随机值
+    Args:
+        len 长度
+    Returns:
+        value
+    """
+    return "".join([choice("0123456789ABCDEF") for i in range(len)])
+
+def StrtoHex(str):
+    """字符串转16进制
+    """
+    str = binascii.b2a_hex(str.encode("utf8"))
+    str = str.decode(encoding='utf-8')
+    return str
+
 
 def RandomStr(randomlength=8):
     """生成随机字符串
@@ -75,30 +115,35 @@ def Paginator(data, page, num=10):
     return ret, total, pages
 
 
-def _Paginate(querys, query_page, per_page=10):
+def _Paginate(querys, query_page, pagesize=10):
     """Sqlachamy query预处理
 
     Args:
         querys: 查询集
-        query_page: int 需要获取的页数
+        query_page: int, 需要获取的页数, 默认1
+        pagesize: int, 每页显示条目个数, 默认10
 
     Returns: 
-        1.一共查询到的数量(count)
-        2.查询集对象 list
-        3.当前页数 currentPage
-        4.totalPages 总页数
-        example:
-        
-            return count, _paginate.items, _paginate.page, _paginate.pages
-            total, result, currentPage, totalPages = _Paginate(a,b)
+        1.total 条目数
+        2.result 生成器
+        3.currentPage 当前页数
+        4.pageCount 总页数
 
     Example:
-        query_page = request.get('query_page',1)
-        total, result, currentPage, totalPages = _Paginate(querys, query_page)
-        "total":total,
-        "result":result,
-        "currentPage":currentPage,
-        "totalPages":totalPages
+        querypage = request.get('querypage',1)
+        pagesize = request.get('pagesize',10)
+
+        querys = XXX.query.filter()
+
+        querys = querys.order_by(XXX.create_time.desc())
+        total, result, currentPage, pageCount = _Paginate(querys, querypage, pagesize)
+
+        return 200, "", {
+            "total":total,
+            "result":[i.toDict() for i in result],
+            "currentPage":currentPage,
+            "pageCount":pageCount
+        }
     """
     if query_page == 0:
         query_page = 1

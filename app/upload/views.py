@@ -84,7 +84,6 @@ def FileExtLegitimate(ext, uploadtype):
 
 def upload_file(request):
 
-    # 逻辑判断
     try:
         file = request.files['file']
     except:

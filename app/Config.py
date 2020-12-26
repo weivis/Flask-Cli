@@ -44,6 +44,7 @@ class BaseConfig:
     # 不想生成API文档的蓝图模块可以写在RESTFUL_API_DOC_EXCLUDE里面
     RESTFUL_API_DOC_EXCLUDE = []
 
+
 class DevelopmentConfig(BaseConfig):
     """
         开发环境配置
@@ -58,8 +59,9 @@ class DevelopmentConfig(BaseConfig):
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'happys_wei@163.com'
-    MAIL_PASSWORD = 'YTKPXXRKISOTASSV'
+    MAIL_USERNAME = ''
+    MAIL_PASSWORD = ''
+
 
 class ProductionConfig(BaseConfig):
     """

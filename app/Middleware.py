@@ -5,18 +5,10 @@ from app.Common import ReturnRequest
 from app.Models import AccountAdmin, AccountUser
 from app.Config import BaseConfig
 
-def POST(func=None):
-    """通用Post请求, 准备废弃"""
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        if request.method == 'POST':
-            return func(request, *args, **kwargs)
-        else:
-            return ReturnRequest((405,'请求方法不对',''))
-    return wrapper
 
 def NORMAL(func=None, method=None):
-    """通用GET, POST请求, 不需要验证TOKEN
+    """
+    通用GET, POST请求, 不需要验证TOKEN
     
     Args:
         method: str, 该中间件默认支持GET, POST， PUT， 等多种方法。可以用method = GET or POST 锁定仅支持某一种类型
@@ -37,6 +29,7 @@ def NORMAL(func=None, method=None):
             return ReturnRequest((405,'请求方法不对',''))
     return wrapper
 
+
 def TOKEN(permission):
     """
     Token验证
@@ -48,8 +41,9 @@ def TOKEN(permission):
 
     Returns:
         Object
-        example:
-            current_account = request['current_account']
+
+    Example:
+        current_account = request['current_account']
 
     """
     def decorator(func):
@@ -71,6 +65,7 @@ def TOKEN(permission):
                 return ReturnRequest((405,'请求方法不正确',{}))
         return wrapper
     return decorator
+
 
 class Auth:
     """用户Token认证.

@@ -1,128 +1,58 @@
 # coding: utf-8
-"""
-	建议:
-		尽量不要用0做默认状态 处理不好会和None冲突
-
-    规范说明:
-		每个表必须存在更新时间和创建时间 可选参数[ index=True ] 设为索引
-		update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-		create_time = db.Column(db.DateTime, default=datetime.now)
-		注: 建议直接继承基类 BaseModel
-
-    基础Sql常用类型提供:
-        参数说明[primary_key=True(设置字段内容不可重复), default(字段默认值)]
-        db.Column(db.Integer, default=0)
-        db.Column(db.Text)
-        db.Column(db.String(255))
-        db.Column(db.Date)
-        db.Column(db.Boolean, default=False)
-    
-    常用参数序列化处理:
-        datetime.strftime(self.字段名, "%Y-%m-%d %H:%M:%S")
-
-    可选字段:
-        软删除状态
-        is_delete = db.Column(db.Boolean, default=False)
-
-    toDict(self)使用方法:
-        filter 默认下为空 '[]' 可以配合filter增加返回条件 如:
-
-        1.
-        filter = ['id']
-        if "id" in filter:
-            json = dict(json,**{"id": self.id})
-
-        2.
-        filter = ['userinfo']
-        if "userinfo" in filter:
-            json = dict(json,**{"userinfo": 用户表.query.filter_by(id=self.用户id).first().getUserinfo() })
-
-        使用范文:
-            def toDict(self, filter=[]):
-
-                json = {
-                    'id': id,
-                }
-                return json
-
-	事务:
-		flush: 写数据库，但不提交，也就是事务未结束
-		commit: 是先调用flush写数据库，然后提交，结束事务，并开始新的事务
-		flush之后你才能在这个Session中看到效果，而commit之后你才能从其它Session中看到效果
-		db.session.add(mapping)
-    	db.session.flush()
-		db.session.commit()
-"""
-
 from datetime import datetime
 from app.Extensions import db
 from flask_bcrypt import check_password_hash, generate_password_hash
 import hashlib
 
+"""
+    Column:
+        db.Column(db.Integer)
+        db.Column(db.Text)
+        db.Column(db.String(255))
+        db.Column(LONGTEXT)             from sqlalchemy.dialects.mysql import LONGTEXT
+        db.Column(db.DateTime)
+        db.Column(db.Boolean, default=False)
+"""
 
 class BaseModel(object):
-    """模型基类，为每个模型补充创建时间与更新时间
-
+    """数据表模型基类，为每个模型补充创建时间与更新时间
     可以继承该基类给每个表加上create_time， update_time
-
-    create_time:
-            行创建时间
-
-    update_time:
-            每次该数据发送变化时会被更新
 
     """
     id = db.Column(db.Integer, primary_key=True)
-    create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-    update_time = db.Column(
-        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
-
-    # def _get(self, id):
-    #     """用id获取单条数据"""
-    #     return self.query.filter_by(id=id).first()
+    create_time = db.Column(db.DateTime, default=datetime.now)                          # 记录的创建时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)   # 记录的更新时间
 
     def _update(self):
-        db.session.add(self)
-        db.session.commit()
+        """带事务提交成功返回200，失败返回400"""
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return 200, "成功", {"id":self.id}
 
-    def __repr__(self):
-        return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
+        except Exception as e:
+            print("事务异常>",e)
+            db.session.rollback()
+            return 400, "出错", {}
+
+    def _base(self):
+        """返回模型基类参数"""
+        return dict(
+            id = self.id,
+            create_time = datetime.strftime(self.create_time, "%Y-%m-%d %H:%M:%S"),
+            update_time = datetime.strftime(self.update_time, "%Y-%m-%d %H:%M:%S")
+        )
 
 
 class BaseModel_Account(object):
     """用户表模型基类
-
     为用户表和管理表继承相同字段和公共方法
-
-    _set_token():
-        设置token
-
-    _get(id):
-        根据id获取单个对象
-        return id.first()
-
-    update():
-        提交数据库
-        self.commit()
-
-    _clear_token():
-        重置token
-        account.self.token = None
-
-    _is_correct_password(plaintext):
-        检验密码 正确返回True 错误返回None
 
     """
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.Text)
-    create_time = db.Column(db.DateTime, default=datetime.now)  # 记录的创建时间
-    update_time = db.Column(
-        db.DateTime, default=datetime.now, onupdate=datetime.now)  # 记录的更新时间
-
-    # @classmethod
-    # def _get(cls, id):
-    #     """用id获取单条数据"""
-    #     return cls.query.filter_by(id=id).first()
+    token = db.Column(db.Text)                                                          # Token
+    create_time = db.Column(db.DateTime, default=datetime.now)                          # 记录的创建时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)   # 记录的更新时间
 
     def _set_token(self):
         """设置新的Token"""
@@ -131,7 +61,14 @@ class BaseModel_Account(object):
         db.session.commit()
         return True
 
+    def _clear_token(self):
+        """清除Token"""
+        self.token = None
+        db.session.commit()
+        return True
+
     def _set_new_password(self, plaintext):
+        """设置新的密码"""
         newpassword = generate_password_hash(plaintext)
         self.password = newpassword
         self._update()
@@ -141,39 +78,56 @@ class BaseModel_Account(object):
         if check_password_hash(self.password, plaintext):
             return True
 
+    @property
+    def userhead(self):
+        """用户头像"""
+        path = config[AppRAM.runConfig].STATIC_LOADPATH + '/static/head/'
+        if self.head:
+            return path + self.head
+        return path + 'default-userhead.jpg'
+
+    def _base(self):
+        """返回模型基类参数"""
+        return dict(
+            id = self.id,
+            create_time = datetime.strftime(self.create_time, "%Y-%m-%d %H:%M:%S"),
+            update_time = datetime.strftime(self.update_time, "%Y-%m-%d %H:%M:%S")
+        )
+
     def _update(self):
-        """提交至数据库"""
-        db.session.add(self)
-        db.session.commit()
+        """带事务提交成功返回200，失败返回400"""
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return 200, "成功", {"id":self.id}
 
-    def _clear_token(self):
-        """清除Token"""
-        self.token = None
-        db.session.commit()
-        return True
+        except Exception as e:
+            print("事务异常>",e)
+            db.session.rollback()
+            return 400, "出错", {}
 
-    def __repr__(self):
-        return '[ repr ] Class: %s, ID: %r' % (self.__class__.__name__, self.id)
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 class AccountAdmin(BaseModel_Account, db.Model):
     """管理员表"""
 
     __tablename__ = 'account_admin'
+    head = db.Column(db.Text)
     account = db.Column(db.Text)
     username = db.Column(db.String(255))
     password = db.Column(db.Text)
 
     def toDict(self):
         return dict(
-            id=self.id,
             token=self.token,
             account=self.account,
             username=self.username,
-            password=self.password
+            **self._base()
         )
 
     def createadmin(self, username, account, password):
+        """新增管理员"""
         self.account = account
         self.username = username
         self.password = generate_password_hash(password)
@@ -187,36 +141,19 @@ class AccountUser(BaseModel, db.Model):
     __tablename__ = 'account_user'
     email = db.Column(db.Text)
     head = db.Column(db.Text)
-    introduce = db.Column(db.Text)
     username = db.Column(db.String(255))
     password = db.Column(db.Text)
+    introduce = db.Column(db.Text)
     status = db.Column(db.Integer, default=0)
-
-    def SetUserStatus(self, newstatus):
-        """设置用户Status"""
-        self.status = newstatus
-        db.session.commit()
-
-
-class ErrorLog(BaseModel, db.Model):
-    """用于储存程序发生的错误到数据库"""
-
-    __tablename__ = 'error_log'
-    address = db.Column(db.String(255))
-    error_content = db.Column(db.Text)
-    level = db.Column(db.Integer, default=0)
-
-    def __init__(self, address, error_content, level=0):
-        self.address = address
-        self.error_content = error_content
-        self.level = level
-        self._update()
 
     def toDict(self):
         return dict(
-            address = self.address,
-            error_content = self.error_content,
-            level = self.level
+            email=self.email,
+            head=self.userhead,
+            username=self.username,
+            introduce=self.introduce,
+            status=self.status,
+            **self._base()
         )
 
 

@@ -37,11 +37,11 @@ def AllAccount(request):
     querys = AccountAdmin.query.filter()
     querys = querys.order_by(AccountAdmin.create_time.desc())
 
-    total, result, currentPage, totalPages = _Paginate(querys, querypage, perpage)
+    total, result, pageCount, totalPages = _Paginate(querys, querypage, perpage)
     return 200, "", {
         "total":total,
         "result":[i.toDict() for i in result],
-        "currentPage":currentPage,
+        "pageCount":pageCount,
         "totalPages":totalPages
     }
 

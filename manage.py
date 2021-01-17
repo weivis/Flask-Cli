@@ -15,7 +15,7 @@ manager = Manager(app)
 migrate = Migrate(app, db)
 
 class CreateAdmin(Command):
-    """Create new admin account"""
+    """通过命令行快速创建管理员 createadmin -u 用户名 -a 登录账户(email) -p 密码"""
 
     option_list = (
         Option('-u', '--username', dest='username', default=None),

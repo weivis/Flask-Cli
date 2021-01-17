@@ -26,7 +26,7 @@ class BaseConfig:
     """
 
     RUNSERVER_IP = '127.0.0.1'
-    RUNSERVER_PORT = 8080
+    RUNSERVER_PORT = 8000
 
     # Token失效时默认返回
     ERRORTOKEN = 10086
@@ -54,7 +54,7 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = "mysql://root:@127.0.0.1:3306/flask-cli?charset=utf8mb4"
 
     # 文件加载地址
-    STATIC_LOADPATH = "http://127.0.0.1"
+    STATIC_LOADPATH = "http://127.0.0.1:8000"
 
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25

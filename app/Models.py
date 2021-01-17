@@ -3,6 +3,8 @@ from datetime import datetime
 from app.Extensions import db
 from flask_bcrypt import check_password_hash, generate_password_hash
 import hashlib
+from app.RAM import AppRAM
+from app.Config import config
 
 """
     Column:
@@ -51,6 +53,10 @@ class BaseModel_Account(object):
     """
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.Text)                                                          # Token
+    head = db.Column(db.Text)
+    password = db.Column(db.Text)
+    username = db.Column(db.String(255))
+    status = db.Column(db.Integer, default=0)       # 用户状态 0正常 1禁止登录
     create_time = db.Column(db.DateTime, default=datetime.now)                          # 记录的创建时间
     update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)   # 记录的更新时间
 
@@ -90,9 +96,21 @@ class BaseModel_Account(object):
         """返回模型基类参数"""
         return dict(
             id = self.id,
+            token = self.token,
+            head = self.userhead,
+            password = self.password,
+            username = self.username,
+            status = self.status,
             create_time = datetime.strftime(self.create_time, "%Y-%m-%d %H:%M:%S"),
             update_time = datetime.strftime(self.update_time, "%Y-%m-%d %H:%M:%S")
         )
+
+    def changestatus(self):
+        if self.status == 1:
+            self.status = 0
+        else:
+            self.status = 1
+        self._update()
 
     def _update(self):
         """带事务提交成功返回200，失败返回400"""
@@ -113,16 +131,14 @@ class AccountAdmin(BaseModel_Account, db.Model):
     """管理员表"""
 
     __tablename__ = 'account_admin'
-    head = db.Column(db.Text)
+    
     account = db.Column(db.Text)
-    username = db.Column(db.String(255))
-    password = db.Column(db.Text)
+    remarks = db.Column(db.String(255)) # 账户备注
 
     def toDict(self):
         return dict(
-            token=self.token,
             account=self.account,
-            username=self.username,
+            remarks=self.remarks,
             **self._base()
         )
 
@@ -135,24 +151,20 @@ class AccountAdmin(BaseModel_Account, db.Model):
         return self
 
 
-class AccountUser(BaseModel, db.Model):
+class AccountUser(BaseModel_Account, db.Model):
     """用户表"""
 
     __tablename__ = 'account_user'
     email = db.Column(db.Text)
-    head = db.Column(db.Text)
-    username = db.Column(db.String(255))
-    password = db.Column(db.Text)
+    phone = db.Column(db.Integer)
     introduce = db.Column(db.Text)
     status = db.Column(db.Integer, default=0)
 
     def toDict(self):
         return dict(
             email=self.email,
-            head=self.userhead,
-            username=self.username,
+            phone = self.phone,
             introduce=self.introduce,
-            status=self.status,
             **self._base()
         )
 

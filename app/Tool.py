@@ -148,9 +148,16 @@ def _Paginate(querys, query_page, pagesize=10):
     if query_page == 0:
         query_page = 1
     total = querys.count()
-    _paginate = querys.paginate(query_page, per_page=per_page, error_out=False)
+    _paginate = querys.paginate(
+        query_page, per_page=pagesize, error_out=False)  # 查询的页数, 每页的条数
+    """
+    error_out 当值为 True 时，下列情况会报错
+        当 page 为 1 时，找不到任何数据
+        page 小于 1，或者 per_page 为负数
+        page 或 per_page 不是整数
+    该方法返回一个分页对象 Pagination
+    """
     return total, _paginate.items, _paginate.page, _paginate.pages
-
 
 def StrForDate(s):
     """字符串转DATE

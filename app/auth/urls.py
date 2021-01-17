@@ -1,8 +1,8 @@
-from app.login import login, views
+from app.auth import auth, views
 from app.Common import ReturnRequest
 from app.Middleware import NORMAL, TOKEN
 
-@login.route('/admin/signin', methods=["POST"])
+@auth.route('/admin/signin', methods=["POST"])
 @NORMAL
 def adminSignin(request):
     """管理员登录接口

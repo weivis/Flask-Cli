@@ -7,14 +7,14 @@ from app.upload import upload
 from app.user import user
 from app.Config import BaseConfig
 from app.account import account
-from app.login import login
+from app.auth import auth
 
 DEFAULT_BLUEPRINT = (
     (demo, '/demo'),
     (upload, '/upload'),
     (user, '/user'),
     (account, '/account'),
-    (login, '/login')
+    (auth, '/auth')
 )
 
 def config_blueprint(app, runConfig):

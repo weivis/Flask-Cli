@@ -25,11 +25,15 @@ class BaseModel(object):
     create_time = db.Column(db.DateTime, default=datetime.now)                          # 记录的创建时间
     update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)   # 记录的更新时间
 
-    def _update(self):
-        """带事务提交成功返回200，失败返回400"""
+    def _update(self,data=None):
+        """带事务提交成功返回200，失败返回400
+            :data 附加返回数据
+        """
         try:
             db.session.add(self)
             db.session.commit()
+            if data:
+                return 200, "成功", dict({"id":self.id},**data)
             return 200, "成功", {"id":self.id}
 
         except Exception as e:
@@ -77,7 +81,6 @@ class BaseModel_Account(object):
         """设置新的密码"""
         newpassword = generate_password_hash(plaintext)
         self.password = newpassword
-        self._update()
 
     def _is_correct_password(self, plaintext):
         """判断密码 正确返回True"""
@@ -96,7 +99,7 @@ class BaseModel_Account(object):
         """返回模型基类参数"""
         return dict(
             id = self.id,
-            token = self.token,
+            # token = self.token,
             head = self.userhead,
             password = self.password,
             username = self.username,
@@ -112,11 +115,15 @@ class BaseModel_Account(object):
             self.status = 1
         self._update()
 
-    def _update(self):
-        """带事务提交成功返回200，失败返回400"""
+    def _update(self,data=None):
+        """带事务提交成功返回200，失败返回400
+            :data 附加返回数据
+        """
         try:
             db.session.add(self)
             db.session.commit()
+            if data:
+                return 200, "成功", dict({"id":self.id},**data)
             return 200, "成功", {"id":self.id}
 
         except Exception as e:
@@ -134,11 +141,13 @@ class AccountAdmin(BaseModel_Account, db.Model):
     
     account = db.Column(db.Text)
     remarks = db.Column(db.String(255)) # 账户备注
+    jurisdiction = db.Column(db.Integer, default=1) # 管理员角色 1 高级管理员 2 一般管理员
 
     def toDict(self):
         return dict(
             account=self.account,
             remarks=self.remarks,
+            jurisdiction=self.jurisdiction,
             **self._base()
         )
 

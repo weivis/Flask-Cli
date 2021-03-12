@@ -10,7 +10,8 @@ def adminSignin(request):
         if obj.status != 0:
             return 400, "该账户存在异常 已被禁止登录", {}
 
-        obj._set_token()
-        return 200, "", obj.toDict()
+        obj._set_token() # 设置新的token
+
+        return obj._update(data=dict(obj.toDict(),**{"token":obj.token}))
         
     return 400, "账户密码不正确", {}

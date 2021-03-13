@@ -60,7 +60,7 @@ class BaseModel_Account(object):
     head = db.Column(db.Text)
     password = db.Column(db.Text)
     username = db.Column(db.String(255))
-    status = db.Column(db.Integer, default=0)       # 用户状态 0正常 1禁止登录
+    status = db.Column(db.Integer, default=0)                                           # 用户状态 0正常 1禁止登录
     create_time = db.Column(db.DateTime, default=datetime.now)                          # 记录的创建时间
     update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)   # 记录的更新时间
 

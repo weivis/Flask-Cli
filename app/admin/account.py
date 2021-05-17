@@ -1,12 +1,12 @@
-from app.Models import AccountAdmin
+from app.models.account import AccountAdmin
 from app.Tool import _Paginate
 from app.Extensions import db
 
-def AccountGet(request):
+def admin_account_get(request):
     current_account = request['current_account']
     return 200, "", current_account.toDict()
 
-def AccountPut(request):
+def admin_account_put(request):
 
     current_account = request['current_account']
 
@@ -30,7 +30,7 @@ def AccountPut(request):
         return 400, "出错", {}
 
 
-def AccountList(request):
+def admin_account_list(request):
     querypage = request.get('querypage',1)
     perpage = request.get('perpage',10)
     
@@ -46,7 +46,7 @@ def AccountList(request):
     }
 
 
-def AccountPost(request):
+def admin_account_post(request):
     from flask_bcrypt import generate_password_hash
 
     email = request.get('email',None)
@@ -75,7 +75,7 @@ def AccountPost(request):
         return 400, "出错", {}
 
 
-def AccountInfoPut(request):
+def other_admin_account_put(request):
     id = request.get('id',None)
     sets = request.get('set',None)
 

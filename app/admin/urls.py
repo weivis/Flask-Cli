@@ -3,10 +3,12 @@ from app.user import views as user
 from app.Common import ReturnRequest
 from app.Middleware import NORMAL, TOKEN
 
+# 管理员 ---------------------------------------------------------------------
+
 @admin.route('/account/get', methods=["POST"])
 @TOKEN(1)
-def AccountGet(request):
-    """获取用户信息
+def admin_account_get(request):
+    """获取当前登录访问的管理员信息
     Returns:
         email: str, 登录邮箱
         username: str, 用户名
@@ -15,12 +17,12 @@ def AccountGet(request):
         remarks: str, 账户备注
         head: str, 头像
     """
-    return ReturnRequest(account.AccountGet(request.json))
+    return ReturnRequest(account.admin_account_get(request.json))
 
 @admin.route('/account/put', methods=["POST"])
 @TOKEN(1)
-def AccountPut(request):
-    """修改用户信息
+def admin_account_put(request):
+    """修改当前登录访问的管理员信息
     Args:
         head: str, 头像
         username: str, 用户名
@@ -32,43 +34,24 @@ def AccountPut(request):
         data:
             userhead
     """
-    return ReturnRequest(account.AccountPut(request.json))
+    return ReturnRequest(account.admin_account_put(request.json))
 
-@admin.route('/account', methods=["POST"])
+@admin.route('/account/list', methods=["POST"])
 @TOKEN(1)
-def Account(request):
-    """获取全部账户
+def admin_account_list(request):
+    """获取全部管理员账户
     Args:
         querys: 查询集  
         query_page: int 需要获取的页数  
 
     Returns:
-        {
-            "code": 200,
-            "data": {
-                "currentPage": 1,
-                "result": [
-                    {
-                        "email": "weivi@outlook.com",
-                        "head": "http://127.0.0.1:8080/static/head/20201118023841327.jpg",
-                        "id": 1,
-                        "remarks": null,
-                        "token": "1",
-                        "username": "WeiVi"
-                    }
-                ],
-                "total": 1,
-                "totalPages": 1
-            },
-            "msg": "成功"
-        }
     """
-    return ReturnRequest(account.AccountList(request.json))
+    return ReturnRequest(account.admin_account_list(request.json))
 
 @admin.route('/account/post', methods=["POST"])
 @TOKEN(1)
-def AccountPost(request):
-    """创建新账户
+def admin_account_post(request):
+    """创建新管理员账户
     Args:
         email: str, 登录邮箱
         username: str, 用户名
@@ -79,12 +62,14 @@ def AccountPost(request):
     Returns:
         200 成功
     """
-    return ReturnRequest(account.AccountPost(request.json))
+    return ReturnRequest(account.admin_account_post(request.json))
 
-@admin.route('/account/put', methods=["POST"])
+# 修改其他管理员信息 ---------------------------------------------------
+
+@admin.route('/other_account/put', methods=["POST"])
 @TOKEN(1)
-def AccountInfoPut(request):
-    """管理账户
+def other_admin_account_put(request):
+    """修改其他管理员的账户信息
     Args:
         id: int, 账户ID
         set: int, 需更改功能
@@ -101,11 +86,13 @@ def AccountInfoPut(request):
         200 成功
 
     """
-    return ReturnRequest(account.AccountInfoPut(request.json))
+    return ReturnRequest(account.other_admin_account_put(request.json))
 
-@admin.route('/user', methods=["POST"])
+# 用户管理 ---------------------------------------------------------------
+
+@admin.route('/user/list', methods=["POST"])
 @TOKEN(1)
-def UserQuery(request):
+def user_list(request):
     """获取用户列表
 
     Args:
@@ -120,11 +107,11 @@ def UserQuery(request):
         pageCount: 总分页数
     """
     
-    return ReturnRequest(user.UserQuery(request.json))
+    return ReturnRequest(user.user_list(request.json))
 
 @admin.route('/user/get', methods=["POST"])
 @TOKEN(2)
-def UserGet(request):
+def user_get(request):
     """获取用户信息
 
     Args:
@@ -136,11 +123,11 @@ def UserGet(request):
         str: username, 用户名
         int: status, 用户状态
     """
-    return ReturnRequest(views.UserGet(request.json))
+    return ReturnRequest(user.user_get(request.json))
 
 @admin.route('/user/put', methods=["POST"])
 @TOKEN(2)
-def UserPut(request):
+def user_put(request):
     """修改用户信息
 
     Args:
@@ -152,15 +139,18 @@ def UserPut(request):
         400: 失败
     """
     
-    return ReturnRequest(views.UserPut(request.json))
+    return ReturnRequest(user.user_put(request.json))
+
+# 管理员登录 ------------------------------------------------------------------------
 
 @admin.route('/signin', methods=["POST"])
 @NORMAL
-def Signin(request):
+def admin_signin(request):
     """管理员登录接口
     Args:
         account: str, 账户
         password: str, 密码
+        
     Returns:
         jurisdiction: int, 用户身份, 1高级管理员 2一般管理员
         token: str, http头部token

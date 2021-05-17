@@ -1,7 +1,7 @@
-from app.Models import AccountUser
+from app.models.account import AccountUser
 from app.Tool import _Paginate
 
-def UserGet(request):
+def user_get(request):
     userid = request.get("id", None)
 
     if not userid:
@@ -14,7 +14,7 @@ def UserGet(request):
     else:
         return 400, "用户不存在", {}
 
-def UserPut(request):
+def user_put(request):
     current_account = request['current_account']
 
     username = request.get("username", None)
@@ -28,7 +28,7 @@ def UserPut(request):
 
     return current_account._update()
 
-def UserQuery(request):
+def user_list(request):
 
     querypage = request.get('querypage', 1)
     pagesize = request.get('pagesize', 10)

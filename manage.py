@@ -3,8 +3,8 @@ import os
 from app import create_app
 from app.Extensions import db
 from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager, Shell, Server, Command, Option
-from app.Models import DemoTable, AccountAdmin, AccountUser
+from flask_script import Manager, Server, Command, Option
+from app.models.account import AccountAdmin
 from app.Config import BaseConfig, config
 from env import RUN_CONFIG
 

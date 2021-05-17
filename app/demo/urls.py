@@ -4,7 +4,7 @@ from app.Middleware import NORMAL, TOKEN
 from app.Email import SeedEmail
 from app.Tool import GenerateToken
 
-from app.Models import AccountAdmin
+from app.models.account import AccountAdmin
 
 @demo.route('/', methods=["GET"])
 @NORMAL

@@ -1,4 +1,4 @@
-from app.Models import AccountAdmin
+from app.models.account import AccountAdmin
 
 def adminSignin(request):
     account = request.get("account",None)

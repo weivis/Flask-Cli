@@ -115,3 +115,9 @@ DEBUG __init__.py 39 构建完成 > 测试日志打印
 WARNING _internal.py 113  * Debugger is active!
 INFO _internal.py 113  * Debugger PIN: 293-206-671
 INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)

@@ -2,7 +2,7 @@ from re import I
 from . import BaseModel, BaseModelAuth
 from app.Extensions import db
 from flask_bcrypt import generate_password_hash, check_password_hash
-from app.Config import config
+from app.Config import config, BaseConfig
 from env import ENV
 
 class AccountInfo(object):
@@ -36,7 +36,7 @@ class AccountInfo(object):
     @property
     def userhead(self):
         """用户头像"""
-        path = config[ENV].STATIC_LOADPATH + '/static/head/'
+        path = config[ENV].STATIC_LOADPATH + BaseConfig.UPLOADFILE_CONFIG['userhead']
         if self.head:
             return path + self.head
         return path + 'default-userhead.jpg'

@@ -44,6 +44,9 @@ class BaseConfig:
     # 不想生成API文档的蓝图模块可以写在RESTFUL_API_DOC_EXCLUDE里面
     RESTFUL_API_DOC_EXCLUDE = []
 
+    UPLOADFILE_CONFIG = {
+        'userhead': '/head/',
+    }
 
 class DevelopmentConfig(BaseConfig):
     """
@@ -54,7 +57,7 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = "mysql://CyTkhMdycB:Xv7cT9rT2G@remotemysql.com:3306/CyTkhMdycB?charset=utf8mb4"
 
     # 文件加载地址
-    STATIC_LOADPATH = "http://127.0.0.1:8000"
+    STATIC_LOADPATH = "http://127.0.0.1:8000/static"
 
     MAIL_SERVER = 'smtp.163.com'
     MAIL_PORT = 25
@@ -72,7 +75,7 @@ class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = ""
 
     # 文件加载地址
-    STATIC_LOADPATH = "http://192.168.0.1"
+    STATIC_LOADPATH = "http://192.168.0.1/static"
 
 config = {
     'development': DevelopmentConfig,

@@ -23,6 +23,10 @@ class BaseModel(object):
         """add()方法"""
         db.session.add(self)
 
+    def _flush(self):
+        """flush()方法"""
+        db.session.flush(self)
+
     def _commit(self,data=None,msg="成功"):
         """带事务提交成功
             返回200，失败返回400

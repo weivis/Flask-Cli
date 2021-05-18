@@ -3,7 +3,7 @@ import os
 import random
 from datetime import datetime
 from io import *
-from app.Config import config
+from app.Config import config, BaseConfig
 from env import ENV
 from app.upload import FileCompress
 
@@ -12,9 +12,7 @@ from app.upload import FileCompress
     key: 上传文件的时候必须附带的参数uploadKey : 此处设置的key
     value: 上传的文件根据key获取储存的路径 比方说 'head':'image', 表示携带head上传的文件需要储存到image路径下
 """
-UPLOADFILE_CONFIG = {
-    'userhead': '/head',
-}
+
 
 def CreateNewFilename(ext):
     """生成新的随机文件名
@@ -91,7 +89,7 @@ def upload_file(request):
     if not upload_key:
         return 400, '错误: Key值不能为空', {}
 
-    if upload_key not in UPLOADFILE_CONFIG:
+    if upload_key not in BaseConfig.UPLOADFILE_CONFIG:
         return 400, '错误: 不允许使用的Key值', {}
 
     filename, ext = QueryFileName(file.filename)
@@ -106,13 +104,11 @@ def upload_file(request):
         files = file
 
     # 保存文件到服务器
-    files.save(os.path.join(os.path.abspath('app/static/' +
-                                            UPLOADFILE_CONFIG[str(upload_key)] + "/"), newfilename))
+    files.save(os.path.join(os.path.abspath('app/static' + BaseConfig.UPLOADFILE_CONFIG[str(upload_key)] ), newfilename))
 
     # 需要生成缩略图的
     if upload_key == 'photo':
-        FileCompress.HeadImg(request.files['file']).save(
-            os.path.join(os.path.abspath('app/static/'), newfilename))
+        FileCompress.HeadImg(request.files['file']).save(os.path.join(os.path.abspath('app/static/'), newfilename))
 
     # 加载地址
     try:
@@ -123,7 +119,7 @@ def upload_file(request):
         LOADPATH = ""
 
     return 200, 'ok', {
-        'lodpath': LOADPATH + '/static' + UPLOADFILE_CONFIG[str(upload_key)] + '/' + newfilename,
-        'ospath': UPLOADFILE_CONFIG[str(upload_key)] + '/' + newfilename,
+        'lodpath': LOADPATH + BaseConfig.UPLOADFILE_CONFIG[str(upload_key)] + newfilename,
+        'ospath': BaseConfig.UPLOADFILE_CONFIG[str(upload_key)] + newfilename,
         'filename': newfilename
     }

@@ -6,6 +6,7 @@ def admin_account_get(request):
     current_account = request['current_account']
     return 200, "", current_account.toDict()
 
+
 def admin_account_put(request):
 
     current_account = request['current_account']

@@ -23,16 +23,17 @@ class BaseModel(object):
         """add()方法"""
         db.session.add(self)
 
-    def _commit(self,data=None):
+    def _commit(self,data=None,msg="成功"):
         """带事务提交成功
             返回200，失败返回400
-            :data 附加返回数据
+            :data 附加返回数据 {**data}
+            :msg  附加返回消息
         """
         try:
             db.session.commit()
             if data:
-                return 200, "成功", dict({"id":self.id},**data)
-            return 200, "成功", {"id":self.id}
+                return 200, msg, dict({"id":self.id},**data)
+            return 200, msg, {"id":self.id}
 
         except Exception as e:
             print("事务异常>",e)

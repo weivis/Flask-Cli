@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import json, jsonify
 import time
 
 def ReturnRequest(returns):
@@ -16,6 +16,7 @@ def ReturnRequest(returns):
             {'code':200, 'msg': 成功,'data': None}
     
     """
+
     code, msg, data = returns
 
     if not msg:

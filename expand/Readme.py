@@ -1,6 +1,41 @@
 """
     desc = 从大到小
 """
+from datetime import datetime
+def returntime():
+    create_time = datetime.now()
+    datetime.strftime(create_time, "%Y-%m-%d %H:%M:%S")
+
+"""
+    更多数据字段类型
+"""
+from app.Extensions import db
+from sqlalchemy.dialects.mysql import LONGTEXT
+from datetime import datetime
+def demo():
+    db.Column(db.Integer, default=0)
+    db.Column(db.Text)
+    db.Column(db.String(255))
+    db.Column(LONGTEXT)
+    db.Column(db.DateTime)
+    db.Column(db.Boolean, default=False)
+    db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+
+
+"""
+    多表事务
+"""
+from app.Extensions import db
+import logging
+def Atomic():
+    try:
+        db.session.commit()
+        return 200, "成功", {}
+
+    except Exception as e:
+        logging.debug(e)
+        db.session.rollback()
+        return 400, "内部出错", {}
 
 """
     get

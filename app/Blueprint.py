@@ -4,7 +4,7 @@
 """
 from app.demo import demo
 from app.upload import upload
-from app.Config import BaseConfig
+from app.Config import BaseConfig, config
 from app.admin import admin
 from app.user import user
 
@@ -15,21 +15,22 @@ DEFAULT_BLUEPRINT = (
     (user, '/user')
 )
 
-def config_blueprint(app, runConfig):
+def config_blueprint(app, ENV):
     """
         读取蓝图配置
 
-        :param runConfig, 运行模式, production
+        :param ENV, 运行模式, production
 
-        (线上模式)所有api会增加 '/api' 代理, 非线上模式时无'/api'代理
+        配置url_prefix的方法:
+            在 Config.py内 PREFIX_TITLE属性 根据ENV自动选择
 
     """
 
     API_DOC_MEMBER = []
 
     for blueprint, prefix in DEFAULT_BLUEPRINT:
-        if runConfig == "production":
-            app.register_blueprint(blueprint, url_prefix = '/api' + prefix)
+        if ENV == "production":
+            app.register_blueprint(blueprint, url_prefix = config[ENV].PREFIX_TITLE + prefix)
         else:
             app.register_blueprint(blueprint, url_prefix = prefix)
 

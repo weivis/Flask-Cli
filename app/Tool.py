@@ -3,7 +3,7 @@
 """
     个人常用工具包
     update 20201227
-    ver 0.3
+    ver 0.4
 """
 
 from random import Random
@@ -123,6 +123,10 @@ def _Paginate(querys, query_page, pagesize=10):
         query_page: int, 需要获取的页数, 默认1
         pagesize: int, 每页显示条目个数, 默认10
 
+    Docs:
+        int     query_page      需要获取的页数, 默认1
+        int     pagesize        每页显示条目个数, 默认10
+
     Returns: 
         1.total 条目数
         2.result 生成器
@@ -152,27 +156,54 @@ def _Paginate(querys, query_page, pagesize=10):
         query_page, per_page=pagesize, error_out=False)  # 查询的页数, 每页的条数
     """
     error_out 当值为 True 时，下列情况会报错
-        当 page 为 1 时，找不到任何数据
-        page 小于 1，或者 per_page 为负数
-        page 或 per_page 不是整数
+        1.当 page 为 1 时，找不到任何数据
+        2.page 小于 1，或者 per_page 为负数
+        3.page 或 per_page 不是整数
     该方法返回一个分页对象 Pagination
     """
     return total, _paginate.items, _paginate.page, _paginate.pages
 
-def StrForDate(s):
+
+def StrForDate(s, types=1):
     """字符串转DATE
 
     用于接收前端发送的日期字符串并转换为date用于程序使用
 
     Args:
-        s: str, Yyyy-MM-dd 格式
+        s: str, YYYYMMDD 格式,  types(1)
+        s: str, Yyyy-MM-dd 格式,    types(2)
 
     Returns: 
         :Returns Date
     """
     try:
-        year_s, mon_s, day_s = s.split('-')
-        return datetime.datetime(int(year_s), int(mon_s), int(day_s))
+        if types == 1:
+            year_s, mon_s, day_s = s[0:4], s[4:6], s[6:8]
+            return datetime.datetime(int(year_s), int(mon_s), int(day_s))
+
+        if types == 2:
+            year_s, mon_s, day_s = s.split('-')
+            return datetime.datetime(int(year_s), int(mon_s), int(day_s))
+
+    except Exception as e:
+        print(e)
+        return {}
+
+
+def StrForDateTime(s):
+    """字符串转DATE
+
+    接收前端日期时间信息
+
+    Args:
+        s: str, Yyyy-MM-dd-MM-DD-SS 格式
+
+    Returns: 
+        :Returns Date
+    """
+    try:
+        year_s, mon_s, day_s, mm, dd, ss = s[0:4], s[4:6], s[6:8], s[8:10], s[10:12], s[12:14],
+        return datetime.datetime(int(year_s), int(mon_s), int(day_s), int(mm), int(dd), int(ss))
     except Exception as e:
         print(e)
         return {}

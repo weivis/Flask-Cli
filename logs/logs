@@ -1,0 +1,117 @@
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Config.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Config.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Blueprint.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\env.py', reloading
+INFO _internal.py 113  * Restarting with stat
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Logs.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Tool.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Tool.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Tool.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Tool.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\Blueprint.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+DEBUG __init__.py 41 2021-05-19 00:31:03.511428
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+DEBUG __init__.py 41 2021-05-19 00:31:04.187211
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO _internal.py 113  * Detected change in 'E:\\Develop\\CreateProject\\Flask-Cli\\app\\__init__.py', reloading
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+INFO _internal.py 113  * Restarting with stat
+DEBUG __init__.py 39 构建完成 > 测试日志打印
+WARNING _internal.py 113  * Debugger is active!
+INFO _internal.py 113  * Debugger PIN: 293-206-671
+INFO _internal.py 113  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)

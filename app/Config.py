@@ -20,6 +20,8 @@
         MAIL_PASSWORD = ''
 '''
 
+import logging
+
 class BaseConfig:
     """
         基本配置类
@@ -48,10 +50,16 @@ class BaseConfig:
         'userhead': '/head/',
     }
 
+    LOG_LEVEL = logging.DEBUG
+
+    LOG_PATH = 'logs/logs'
+
 class DevelopmentConfig(BaseConfig):
     """
         开发环境配置
     """
+    
+    PREFIX_TITLE = ''
 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql://CyTkhMdycB:Xv7cT9rT2G@remotemysql.com:3306/CyTkhMdycB?charset=utf8mb4"
@@ -65,17 +73,23 @@ class DevelopmentConfig(BaseConfig):
     MAIL_USERNAME = ''
     MAIL_PASSWORD = ''
 
+    LOG_LEVEL = logging.DEBUG
+
 
 class ProductionConfig(BaseConfig):
     """
         线上环境配置
     """
     
+    PREFIX_TITLE = '/api'
+
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = ""
 
     # 文件加载地址
     STATIC_LOADPATH = "http://192.168.0.1/static"
+
+    LOG_LEVEL = logging.WARNING
 
 config = {
     'development': DevelopmentConfig,

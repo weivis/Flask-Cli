@@ -5,7 +5,9 @@ from app.Blueprint import config_blueprint
 from app.Extensions import config_extensions
 from app.Errorhandler import config_errorhandler
 from app.Startprint import config_startprint, config_overstart
+from app.Logs import config_runninglog
 from app.Config import config
+import logging
 
 def create_app(ENV='default'):
     """构建入口 create_app()
@@ -19,8 +21,10 @@ def create_app(ENV='default'):
     """
 
     app = Flask(__name__, static_folder='static')
-
+    
     app.config.from_object(config[ENV])
+
+    config_runninglog(ENV)
 
     config_startprint(app, ENV)
 
@@ -31,6 +35,8 @@ def create_app(ENV='default'):
     config_errorhandler(app)
 
     config_overstart()
+
+    logging.debug('构建完成 > 测试日志打印')
 
     @app.route("/")
     def index():

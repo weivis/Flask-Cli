@@ -90,12 +90,10 @@ def other_admin_account_put(request):
             return 400, "密码不能为空", {}
 
         obj.passwort = generate_password_hash(passwort)
-        obj._update()
         return obj._commit()
 
     if sets == 4:
         obj.remarks = request.get('remarks',None)
-        obj._update()
         return obj._commit()
 
     if sets == 5:

@@ -4,7 +4,7 @@ def adminSignin(request):
     account = request.get("account",None)
     password = request.get("password",None)
 
-    obj = AccountAdmin.query.filter(AccountAdmin.account == account).first()
+    obj = AccountAdmin.query.filter(AccountAdmin.email == account).first()
     if obj and obj._is_correct_password(password):
 
         if obj.status != 0:
@@ -12,6 +12,6 @@ def adminSignin(request):
 
         obj._set_token() # 设置新的token
 
-        return obj._update(data=dict(obj.toDict(),**{"token":obj.token}))
+        return obj._commit(data=dict(obj.toDict(),**{"token":obj.token}))
         
     return 400, "账户密码不正确", {}

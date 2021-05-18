@@ -6,9 +6,9 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server, Command, Option
 from app.models.account import AccountAdmin
 from app.Config import BaseConfig, config
-from env import RUN_CONFIG
+from env import ENV
 
-app = create_app(RUN_CONFIG)
+app = create_app(ENV)
 manager = Manager(app)
 migrate = Migrate(app, db)
 
@@ -31,7 +31,7 @@ class CreateAdmin(Command):
         print("密码:",password)
         
 manager.add_command("db", MigrateCommand)
-manager.add_command("runserver", Server(port=BaseConfig.RUNSERVER_PORT, host=BaseConfig.RUNSERVER_IP, use_debugger=config[RUN_CONFIG].DEBUG))
+manager.add_command("runserver", Server(port=BaseConfig.RUNSERVER_PORT, host=BaseConfig.RUNSERVER_IP, use_debugger=config[ENV].DEBUG))
 manager.add_command("createadmin", CreateAdmin())
 
 if __name__ == '__main__':

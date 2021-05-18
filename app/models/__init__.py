@@ -59,13 +59,11 @@ class BaseModelAuth(object):
         """设置新的Token"""
         from app.Tool import GenerateToken
         self.token = GenerateToken(str(self.account))
-        db.session.commit()
         return True
 
     def _clear_token(self):
         """清除Token"""
         self.token = None
-        db.session.commit()
         return True
 
     def _BaseModelAuth_Base(self):

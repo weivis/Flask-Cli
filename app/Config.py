@@ -51,7 +51,7 @@ class DevelopmentConfig(BaseConfig):
     """
 
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql://CyTkhMdycB:Xv7cT9rT2G@remotemysql.com:3306/flask-cli?charset=utf8mb4"
+    SQLALCHEMY_DATABASE_URI = "mysql://CyTkhMdycB:Xv7cT9rT2G@remotemysql.com:3306/CyTkhMdycB?charset=utf8mb4"
 
     # 文件加载地址
     STATIC_LOADPATH = "http://127.0.0.1:8000"

@@ -3,7 +3,7 @@ from . import BaseModel, BaseModelAuth
 from app.Extensions import db
 from flask_bcrypt import generate_password_hash, check_password_hash
 from app.Config import config
-from app.RAM import AppRAM
+from env import ENV
 
 class AccountInfo(object):
     """用户表模型基类
@@ -36,7 +36,7 @@ class AccountInfo(object):
     @property
     def userhead(self):
         """用户头像"""
-        path = config[AppRAM.runConfig].STATIC_LOADPATH + '/static/head/'
+        path = config[ENV].STATIC_LOADPATH + '/static/head/'
         if self.head:
             return path + self.head
         return path + 'default-userhead.jpg'
@@ -45,7 +45,9 @@ class AccountInfo(object):
         """返回模型基类参数"""
         return dict(
             username = self.username,
-            head = self.userhead
+            head = self.userhead,
+            email = self.email,
+            account = self.account
         )
 
 
@@ -71,6 +73,7 @@ class AccountAdmin(BaseModel, AccountInfo, BaseModelAuth, db.Model):
         self.email = email
         self.username = username
         self.password = generate_password_hash(password)
+        self.jurisdiction = 1
         self._add()
         self._commit()
         return self

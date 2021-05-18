@@ -26,7 +26,7 @@ def user_put(request):
     if head:
         current_account.head = head
 
-    return current_account._update()
+    return current_account._commit()
 
 def user_list(request):
 

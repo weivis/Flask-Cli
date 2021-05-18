@@ -6,9 +6,8 @@ from app.Extensions import config_extensions
 from app.Errorhandler import config_errorhandler
 from app.Startprint import config_startprint, config_overstart
 from app.Config import config
-from app.RAM import AppRAM
 
-def create_app(runConfig='default'):
+def create_app(ENV='default'):
     """构建入口 create_app()
 
     :param runConfig: 运行配置文件 默认default, 可选'development', 'production'
@@ -20,19 +19,22 @@ def create_app(runConfig='default'):
     """
 
     app = Flask(__name__, static_folder='static')
-    
-    AppRAM.runConfig = runConfig
 
-    app.config.from_object(config[runConfig])
+    app.config.from_object(config[ENV])
 
-    config_startprint(app, runConfig)
+    config_startprint(app, ENV)
 
     config_extensions(app)
 
-    config_blueprint(app, runConfig)
+    config_blueprint(app, ENV)
 
     config_errorhandler(app)
 
     config_overstart()
 
+    @app.route("/")
+    def index():
+        # print(LOAD_PATH)
+        return ""
+    
     return app

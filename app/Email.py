@@ -3,7 +3,7 @@ from app.Extensions import mail
 from flask_mail import Message
 from threading import Thread
 from app.Config import config
-from app.RAM import AppRAM
+from env import ENV
 
 class EmailConfig:
     """发送邮件模块存放个性配置
@@ -38,7 +38,7 @@ def SeedEmail(recipients, email_title, email_body='', email_html='', sender=None
     """
 
     if not sender:
-        sender = config[AppRAM.runConfig].MAIL_USERNAME
+        sender = config[ENV].MAIL_USERNAME
 
     # 创建上下文
     app = current_app._get_current_object()

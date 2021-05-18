@@ -19,15 +19,7 @@ def admin_account_put(request):
     if username:
         current_account.username = username
     
-    try:
-        current_account._update()
-        return 200, "", {
-            "userhead": current_account.userhead
-        }
-
-    except Exception as e:
-        print(e)
-        return 400, "出错", {}
+    return current_account._commit(data=dict(use = current_account.userhead))
 
 
 def admin_account_list(request):
@@ -59,20 +51,14 @@ def admin_account_post(request):
         return 400, "信息填写不正确", {}
 
     add = AccountAdmin()
-    add.account = email
+    add.email = email
     add.username = username
     add.password = generate_password_hash(password)
     add.jurisdiction = jurisdiction
     add.remarks = remarks
     add.status = 0
-    
-    try:
-        add._update()
-        return 200, "", {}
-
-    except Exception as e:
-        print(e)
-        return 400, "出错", {}
+    add._add()
+    return add._commit()
 
 
 def other_admin_account_put(request):
@@ -84,13 +70,16 @@ def other_admin_account_put(request):
         return 400, "账户不存在", {}
 
     if sets == 1:
+        if obj.status == 0:
+            obj.status = 1
+        else:
+            obj.status = 0
         obj.changestatus()
-        return 200, "", {}
+        return obj._commit()
 
     if sets == 2:
-        db.session.delete(obj)
-        db.session.commit()
-        return 200, "", {}
+        obj._delete()
+        return obj._commit()
 
     if sets == 3:
         from flask_bcrypt import generate_password_hash
@@ -101,18 +90,17 @@ def other_admin_account_put(request):
 
         obj.passwort = generate_password_hash(passwort)
         obj._update()
-        return 200, "修改成功", {}
+        return obj._commit()
 
     if sets == 4:
         obj.remarks = request.get('remarks',None)
         obj._update()
-        return 200, "修改成功", {}
+        return obj._commit()
 
     if sets == 5:
         email = request.get('email',None)
         if not email:
             return 400, "不允许为空", {}
-        obj.account = email
-        obj._update()
-        return 200, "修改成功", {}
+        obj.email = email
+        return obj._commit()
     

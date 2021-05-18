@@ -3,10 +3,8 @@ import os
 import random
 from datetime import datetime
 from io import *
-# from manage import RUN_CONFIG
 from app.Config import config
-from app.RAM import AppRAM
-
+from env import ENV
 from app.upload import FileCompress
 
 """
@@ -118,7 +116,7 @@ def upload_file(request):
 
     # 加载地址
     try:
-        LOADPATH = config[AppRAM.runConfig].STATIC_LOADPATH
+        LOADPATH = config[ENV].STATIC_LOADPATH
 
     except Exception as e:
         print(e)

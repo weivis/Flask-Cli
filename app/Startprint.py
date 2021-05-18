@@ -10,21 +10,21 @@ def config_startprint(app, runConfig):
     logo()
     
     import datetime
-    from app.RAM import AppRAM
+    from env import ENV
     from app.Config import BaseConfig, config
 
     if runConfig == "production":
         print("线上运行模式 >")
         print("启动时间      :",datetime.datetime.now())
-        print("Run in       :  <",AppRAM.runConfig,"> Config")
+        print("Run in       :  <",ENV,"> Config")
         print()
 
     else:
         print("开发模式运行 >")
-        print("配置文件      : ",AppRAM.runConfig," Config")
+        print("配置文件      : ",ENV," Config")
         print("启动时间      :",datetime.datetime.now())
         print("Live Docs    : ","http://" + BaseConfig.RUNSERVER_IP + ":" + str(BaseConfig.RUNSERVER_PORT) + "/docs/api/")
-        print("DEBUG Active : ", config[AppRAM.runConfig].DEBUG)
+        print("DEBUG Active : ", config[ENV].DEBUG)
         print()
 
 def logo():

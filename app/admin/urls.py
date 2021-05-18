@@ -5,9 +5,9 @@ from app.Middleware import NORMAL, TOKEN
 
 # 管理员 ---------------------------------------------------------------------
 
-@admin.route('/account/get', methods=["POST"])
+@admin.route('/my/account/get', methods=["POST"])
 @TOKEN(1)
-def admin_account_get(request):
+def my_admin_account_get(request):
     """获取当前登录访问的管理员信息
     Returns:
         email: str, 登录邮箱
@@ -19,9 +19,9 @@ def admin_account_get(request):
     """
     return ReturnRequest(account.admin_account_get(request.json))
 
-@admin.route('/account/put', methods=["POST"])
+@admin.route('/my/account/put', methods=["POST"])
 @TOKEN(1)
-def admin_account_put(request):
+def my_admin_account_put(request):
     """修改当前登录访问的管理员信息
     Args:
         head: str, 头像
